@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>神修维基 - 维基总目录</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:"Microsoft Yahei",sans-serif;}
+body{
+    background: linear-gradient(135deg, #991515 0%, #e6b020 100%);
+    background-attachment:fixed;
+    color:#fff8e0;
+    line-height:1.7;
+}
+.container{max-width:1400px;margin:0 auto;padding:15px;}
+.wiki-header{display:flex;justify-content:space-between;align-items:center;padding:15px 0;border-bottom:1px solid #fff8e044;margin-bottom:20px;flex-wrap:wrap;gap:10px;}
+.wiki-header a{color:#fff8e0;text-decoration:none;padding:4px 10px;border:1px solid #fff8e0;border-radius:6px;}
+.wiki-title{font-size:24px;letter-spacing:4px;font-weight:bold;color:#fff8e0;}
+.nav-bar{display:flex;gap:12px;flex-wrap:wrap;}
+/* 维基主体布局：左侧目录 + 右侧内容 */
+.wiki-main{
+    display:grid;
+    grid-template-columns:280px 1fr;
+    gap:24px;
+}
+/* 左侧侧边目录栏 */
+.wiki-sidebar{
+    background:rgba(0,0,0,0.35);
+    border:1px solid #fff8e033;
+    border-radius:10px;
+    padding:20px;
+    height:fit-content;
+    position:sticky;
+    top:15px;
+    max-height:90vh;
+    overflow-y:auto;
+}
+.wiki-sidebar h3{
+    border-bottom:1px solid #fff8e044;
+    padding-bottom:8px;
+    margin-bottom:14px;
+}
+.wiki-sidebar ul{
+    list-style:none;
+}
+.wiki-sidebar li{
+    margin:6px 0;
+}
+.wiki-sidebar a{
+    color:#fff8e0;
+    text-decoration:none;
+    display:block;
+    padding:5px 8px;
+    border-radius:4px;
+    transition:0.2s;
+    font-size:14px;
+}
+.wiki-sidebar a:hover{
+    background:rgba(255,248,224,0.18);
+    padding-left:12px;
+}
+/* 右侧内容区 */
+.wiki-content{
+    background:rgba(0,0,0,0.35);
+    border:1px solid #fff8e033;
+    border-radius:10px;
+    padding:24px;
+}
+.wiki-content h2{
+    margin-bottom:16px;
+    padding-bottom:8px;
+    border-bottom:1px solid #fff8e044;
+}
+/* 移动端适配，侧边栏折叠到上方 */
+@media (max-width:768px){
+    .wiki-main{
+        grid-template-columns:1fr;
+    }
+    .nav-bar{flex-wrap:wrap;justify-content:center;}
+}
+</style>
+</head>
+<body>
+<div class="container">
+    <header class="wiki-header">
+        <span class="wiki-title">神修维基</span>
+        <nav class="nav-bar">
+            <a href="index.html">网站首页</a>
+            <a href="wiki.html">维基总目录</a>
+            <a href="members.html">成员展示</a>
+            <a href="forum.html">论坛</a>
+            <a href="history.html">历史档案</a>
+            <a href="allies.html">盟友势力</a>
+        </nav>
+    </header>
+    <div class="wiki-main">
+        <!-- 左侧目录【全部组织，来自神修维基排行】 -->
+        <aside class="wiki-sidebar">
+            <h3>📚 维基总目录</h3>
+            <ul>
+                <li><a href="#intro">维基介绍</a></li>
+                <li><a href="#rank">神修维基排行总览</a></li>
+                <li><h4 style="margin:10px 0 4px;">最强战队</h4></li>
+                <li><a href="gcyuanshi.html">GC.源氏</a></li>
+                <li><a href="ze.html">ze</a></li>
+                <li><a href="shenfeng.html">神风</a></li>
+                <li><a href="yingge.html">莺歌</a></li>
+                <li><h4 style="margin:10px 0 4px;">新时代最强</h4></li>
+                <li><a href="renjian.html">人间</a></li>
+                <li><a href="quemen.html">却门</a></li>
+                <li><a href="mingyue.html">明月</a></li>
+                <li><a href="hefu.html">和府</a></li>
+                <li><h4 style="margin:10px 0 4px;">巅峰战队</h4></li>
+                <li><a href="zhantian.html">斩天</a></li>
+                <li><a href="chuye.html">彻夜</a></li>
+                <li><a href="tianyuan.html">天原</a></li>
+                <li><a href="gelan.html">格陵兰</a></li>
+                <li><a href="tiankongdao.html">天空岛</a></li>
+                <li><a href="jingshui.html">镜水</a></li>
+                <li><a href="yingxue.html">映雪</a></li>
+                <li><a href="yuetian.html">月天</a></li>
+                <li><a href="heimen.html">黑门</a></li>
+                <li><a href="yinhe.html">银河</a></li>
+                <li><a href="jiannan.html">剑南</a></li>
+                <li><a href="fengtian.html">奉天</a></li>
+                <li><a href="zhanwei.html">战维</a></li>
+                <li><a href="jingwang.html">净网</a></li>
+                <li><a href="sanguo.html">三国</a></li>
+                <li><a href="kuangtu.html">狂徒</a></li>
+                <li><a href="heixiao.html">黑校</a></li>
+                <li><a href="shuye.html">书夜</a></li>
+                <li><a href="yehuo.html">业火</a></li>
+                <li><a href="luodu.html">落渡</a></li>
+                <li><a href="loulan.html">楼兰</a></li>
+                <li><a href="kongshan.html">空山</a></li>
+                <li><a href="wufeng.html">无风</a></li>
+                <li><a href="canghai.html">沧海</a></li>
+                <li><a href="shutian.html">书天</a></li>
+                <li><a href="weiyang.html">未央</a></li>
+                <li><a href="jianfa.html">剑法</a></li>
+                <li><a href="baihuo.html">白火</a></li>
+                <li><a href="yuanqi.html">源启</a></li>
+                <li><a href="ek.html">ek</a></li>
+                <li><a href="dezhi.html">德骘</a></li>
+                <li><a href="dongjing.html">东京</a></li>
+                <li><h4 style="margin:10px 0 4px;">顶流战队</h4></li>
+                <li><a href="changfeng.html">长风</a></li>
+                <li><a href="yunfu.html">云府</a></li>
+                <li><a href="lunhui.html">轮回</a></li>
+                <li><a href="heiqi.html">黑旗</a></li>
+                <li><a href="jianxiu.html">剑修</a></li>
+                <li><a href="canglan.html">沧澜</a></li>
+                <li><a href="huaji.html">花祭</a></li>
+                <li><a href="wanguo.html">万国</a></li>
+                <li><a href="weitian.html">维天</a></li>
+                <li><a href="wangfu.html">王府</a></li>
+                <li><a href="kuanghuo.html">狂火</a></li>
+                <li><a href="baizhan.html">白斩</a></li>
+                <li><a href="huisheng.html">回声</a></li>
+                <li><a href="zuitian.html">罪天</a></li>
+                <li><a href="kongwen.html">空文</a></li>
+                <li><a href="anyue.html">暗月</a></li>
+                <li><a href="shuiyuan.html">水鸢</a></li>
+                <li><a href="dongying.html">东瀛</a></li>
+                <li><a href="shuihua.html">水花</a></li>
+                <li><a href="jianfeng.html">剑风</a></li>
+                <li><a href="huangdao.html">煌道</a></li>
+                <li><a href="dongqi.html">东启</a></li>
+                <li><a href="shuige.html">水歌</a></li>
+                <li><a href="guimen.html">鬼门</a></li>
+                <li><a href="xuwu.html">虚无</a></li>
+                <li><a href="rishu.html">日始</a></li>
+                <li><a href="rongguang.html">荣光</a></li>
+                <li><a href="jianshuang.html">剑霜</a></li>
+                <li><a href="tianqi.html">天启</a></li>
+                <li><a href="miegu.html">灭古</a></li>
+                <li><a href="jienan.html">劫难</a></li>
+                <li><a href="lingxiao.html">凌霄</a></li>
+                <li><a href="hehua.html">荷花</a></li>
+                <li><a href="heixing.html">黑星</a></li>
+                <li><a href="qingong.html">勤工</a></li>
+                <li><a href="donglian.html">东联</a></li>
+                <li><a href="libai.html">里白</a></li>
+                <li><a href="tianjing.html">天京</a></li>
+                <li><a href="tianxiahui.html">天下会</a></li>
+                <li><a href="jiuchongtian.html">九重天</a></li>
+                <li><a href="chuntingyuan.html">春庭院</a></li>
+                <li><a href="huanghelou.html">黄鹤楼</a></li>
+                <li><h4 style="margin:10px 0 4px;">一流战队</h4></li>
+                <li><a href="yongheng.html">永恒</a></li>
+                <li><a href="quanxing.html">全性</a></li>
+                <li><a href="guandong.html">关东</a></li>
+                <li><a href="shuangbang.html">双绑</a></li>
+                <li><a href="tianlin.html">天凛</a></li>
+                <li><a href="huatian.html">华天</a></li>
+                <li><a href="luoling.html">落凌</a></li>
+                <li><a href="zhujian.html">竹剑</a></li>
+                <li><a href="xinfeng.html">新风</a></li>
+                <li><a href="litian.html">里天</a></li>
+                <li><a href="sane.html">三恶</a></li>
+                <li><a href="jiutian.html">九天</a></li>
+                <li><a href="shasheng.html">杀生</a></li>
+                <li><a href="yuanhuo.html">源火</a></li>
+                <li><a href="haiguang.html">海光</a></li>
+                <li><a href="xianling.html">仙陵</a></li>
+                <li><a href="jiushu.html">救生</a></li>
+                <li><a href="bingdao.html">冰岛</a></li>
+                <li><a href="yuanzun.html">元尊</a></li>
+                <li><a href="lingyu.html">领域</a></li>
+                <li><a href="cuilian.html">催恋</a></li>
+                <li><a href="changtian.html">长天</a></li>
+                <li><a href="diying.html">帝鹰</a></li>
+                <li><a href="fengyuan.html">风鸢</a></li>
+                <li><a href="tianwang.html">天网</a></li>
+                <li><a href="zhansha.html">斩杀</a></li>
+                <li><a href="yuhuo.html">狱火</a></li>
+                <li><a href="yushui.html">狱水</a></li>
+                <li><a href="zhuxian.html">诛仙</a></li>
+                <li><a href="zuifa.html">罪罚</a></li>
+                <li><a href="tianye.html">天夜</a></li>
+                <li><a href="tianjian.html">天剑</a></li>
+                <li><a href="jiangye.html">江夜</a></li>
+                <li><a href="heiye.html">黑夜</a></li>
+                <li><a href="dongwu.html">东吴</a></li>
+                <li><a href="shendao.html">神道</a></li>
+                <li><a href="mohua.html">墨化</a></li>
+                <li><a href="huanian.html">花念</a></li>
+                <li><a href="xiliang.html">西凉</a></li>
+                <li><a href="chenggao.html">城高</a></li>
+                <li><a href="xinxu.html">心许</a></li>
+                <li><a href="jiushi.html">救世</a></li>
+                <li><a href="xianting.html">仙庭</a></li>
+                <li><a href="huisu.html">回溯</a></li>
+                <li><a href="wushentan.html">武神坛</a></li>
+                <li><a href="shenchuan.html">神川</a></li>
+                <li><a href="baiyujing.html">白玉京</a></li>
+                <li><a href="shuangdaoliu.html">双刀流</a></li>
+                <li><a href="tianshifu.html">天师府</a></li>
+                <li><a href="caishendian.html">财神殿</a></li>
+                <li><a href="changshengtian.html">长生天</a></li>
+                <li><a href="chuntingxue.html">春庭雪</a></li>
+                <li><a href="huanxiangxiang.html">幻想乡</a></li>
+                <li><a href="jiangnanyun.html">江南韵</a></li>
+                <li><a href="xinyian.html">新义安</a></li>
+                <li><a href="fenghuaxueyue.html">风花雪月</a></li>
+                <li><a href="yiboyuntian.html">义薄云天</a></li>
+                <li><a href="dongfangshuye.html">东方树叶</a></li>
+                <li><h4 style="margin:10px 0 4px;">最强俱乐部</h4></li>
+                <li><a href="liminghui.html">黎明会</a></li>
+                <li><a href="yixinhui.html">一心会</a></li>
+                <li><a href="weixinmeng.html">维心盟</a></li>
+                <li><h4 style="margin:10px 0 4px;">临近最强</h4></li>
+                <li><a href="hu.html">护</a></li>
+                <li><h4 style="margin:10px 0 4px;">巅峰俱乐部</h4></li>
+                <li><a href="donghaimeng.html">东海盟</a></li>
+                <li><a href="yixinmeng.html">一心盟</a></li>
+                <li><a href="zhanxinhui.html">斩心会</a></li>
+                <li><a href="huoshanlianjun.html">火山联军</a></li>
+                <li><a href="shenqimeng.html">神启盟</a></li>
+                <li><a href="tianfameng.html">天法盟</a></li>
+                <li><a href="huaxinmeng.html">华心盟</a></li>
+                <li><a href="guixinmeng.html">归心盟</a></li>
+                <li><a href="yongxinmeng.html">永心盟</a></li>
+                <li><a href="jingtianmeng.html">净天盟</a></li>
+                <li><a href="duolun.html">多伦</a></li>
+                <li><h4 style="margin:10px 0 4px;">顶级俱乐部</h4></li>
+                <li><a href="huaxinghui.html">华兴会</a></li>
+                <li><a href="qinghai.html">情海</a></li>
+                <li><a href="huayue.html">华约</a></li>
+                <li><a href="wangjia.html">王家</a></li>
+                <li><a href="tongxinhui.html">同心会</a></li>
+                <li><a href="zhanyuemeng.html">斩月盟</a></li>
+                <li><a href="fengluomeng.html">风落盟</a></li>
+                <li><a href="tianhaimeng.html">天海盟</a></li>
+                <li><a href="xuanlanhui.html">玄澜会</a></li>
+                <li><a href="chuyemeng.html">初夜盟</a></li>
+                <li><a href="fenggehui.html">风歌会</a></li>
+                <li><h4 style="margin:10px 0 4px;">一流俱乐部</h4></li>
+                <li><a href="tiancangmeng.html">天沧盟</a></li>
+                <li><a href="dongyuemeng.html">东约盟</a></li>
+                <li><a href="yongnanmeng.html">永难盟</a></li>
+                <li><a href="fenghui.html">风和会</a></li>
+                <li><a href="juyimeng.html">聚义盟</a></li>
+                <li><a href="tingxuemeng.html">听雪盟</a></li>
+                <li><a href="hanhaimeng.html">瀚海盟</a></li>
+                <li><a href="tongmenghui.html">同盟会</a></li>
+                <li><a href="tianxinhui.html">天心会</a></li>
+                <li><a href="zhanfenghui.html">斩风会</a></li>
+                <li><a href="fanhaimeng.html">泛海盟</a></li>
+                <li><a href="wangmingzhitu.html">亡命之徒</a></li>
+                <li><a href="cangsheng.html">苍生</a></li>
+                <li><a href="penlian.html">喷联</a></li>
+                <li><a href="yinghua.html">樱花</a></li>
+            </ul>
+            <h3 style="margin-top:24px;">🔗 站点跳转</h3>
+            <ul>
+                <li><a href="index.html">网站首页</a></li>
+                <li><a href="wiki.html">维基总目录</a></li>
+                <li><a href="forum.html">前往论坛</a></li>
+                <li><a href="members.html">成员展示</a></li>
+            </ul>
+        </aside>
+        <!-- 右侧主内容 -->
+        <main class="wiki-content">
+            <h2 id="intro">神修维基介绍</h2>
+            <p>神修维基，是神修官方档案站点，用于归档、记录圈内历史、组织、人物与重大事件。所有词条为圈子兴趣创作，仅供档案查阅。</p>
+            <br>
+            <h2 id="rank">神修出品 全网最全百科维基</h2>
+            <p>借鉴榜单：黎明会排榜</p>
+            <br>
+            <p>同榜单内组织名称排序仅为排版顺序，不代表势力强弱。</p>
+        </main>
+    </div>
+</div>
+<script src="assets/js/script.js"></script>
+</body>
+</html>

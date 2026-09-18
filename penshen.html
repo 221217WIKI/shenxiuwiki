@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>神修维基 - 喷神人物档案</title>
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+    background: linear-gradient(135deg, #991515 0%, #e6b020 100%);
+    background-attachment: fixed;
+    color:#3a2410;
+    font-family:"Microsoft Yahei",sans-serif;
+    padding:24px;
+}
+
+.container{
+    max-width:1300px;
+    margin:0 auto;
+}
+
+/* 顶部标题栏 */
+.header{
+    background: linear-gradient(135deg, #b00020 0%, #f5a623 100%);
+    padding:18px 24px;
+    border:2px solid;
+    border-color:#ffd24d #7a2412 #7a2412 #ffd24d;
+    border-radius:12px;
+    margin-bottom:20px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    flex-wrap:wrap;
+    gap:12px;
+    box-shadow:0 0 18px rgba(255,170,0,0.45);
+}
+
+.header h1{
+    font-size:24px;
+    letter-spacing:2px;
+    color:#fff8e0;
+}
+
+.back-link{
+    color:#fff8e0;
+    text-decoration:none;
+    border:1px solid #fff8e0;
+    padding:6px 12px;
+    border-radius:6px;
+    font-weight:bold;
+}
+
+.back-link:hover{
+    background:rgba(255,248,224,0.2);
+}
+
+/* 搜索区 */
+.search-area{
+    margin-bottom:20px;
+    display:flex;
+    gap:10px;
+    align-items:center;
+}
+
+#searchInput{
+    flex:1;
+    max-width:500px;
+    padding:10px 14px;
+    border:2px solid;
+    border-color:#ffd24d #b00020 #b00020 #ffd24d;
+    background:#fff8e0;
+    color:#3a2410;
+    font-size:14px;
+    outline:none;
+    border-radius:8px;
+}
+
+#searchInput:focus{
+    box-shadow:0 0 10px rgba(255,210,77,0.6);
+}
+
+/* 复古凸起按钮 */
+.qq-btn{
+    border:2px solid;
+    border-color:#fff #7a2412 #7a2412 #fff;
+    background: linear-gradient(180deg, #ffd24d 0%, #b00020 100%);
+    color:#fff8e0;
+    padding:8px 16px;
+    cursor:pointer;
+    font-size:14px;
+    font-weight:bold;
+    border-radius:8px;
+}
+
+.qq-btn:hover{
+    box-shadow:0 0 12px rgba(255,170,0,0.5);
+}
+
+.qq-btn:active{
+    border-color:#7a2412 #fff #fff #7a2412;
+}
+
+/* 人物卡片网格 */
+.card-wrap{
+    display:grid;
+    grid-template-columns:repeat(auto-fill, minmax(260px, 1fr));
+    gap:16px;
+}
+
+.card-item{
+    background: linear-gradient(160deg, #fff4c4 0%, #ffd24d 45%, #f5a623 100%);
+    border:2px solid;
+    border-color:#ffd24d #b00020 #b00020 #ffd24d;
+    padding:18px;
+    border-radius:12px;
+    transition:0.25s;
+    box-shadow:0 0 10px rgba(255,170,0,0.35);
+    text-align:center;
+}
+
+.card-item:hover{
+    transform:translateY(-4px);
+    box-shadow:0 0 18px rgba(255,140,0,0.65);
+    border-color:#fff4c4 #7a2412 #7a2412 #fff4c4;
+}
+
+/* 头像 */
+.card-avatar{
+    width:80px;
+    height:80px;
+    margin:0 auto 12px;
+    border-radius:50%;
+    border:3px solid #b00020;
+    background:#fff4c4;
+    overflow:hidden;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    box-shadow:0 0 12px rgba(255,210,77,0.7);
+}
+
+.card-avatar img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+}
+
+.card-avatar .avatar-text{
+    font-size:30px;
+    font-weight:bold;
+    color:#b00020;
+}
+
+.card-name{
+    font-size:20px;
+    color:#7a2412;
+    font-weight:bold;
+    margin-bottom:10px;
+    border-bottom:1px solid #b00020;
+    padding-bottom:6px;
+}
+
+.card-desc{
+    font-size:14px;
+    line-height:1.6;
+    color:#3a2410;
+    text-align:left;
+}
+
+.card-tag{
+    display:inline-block;
+    margin-top:12px;
+    font-size:12px;
+    padding:4px 10px;
+    background: linear-gradient(135deg, #b00020 0%, #7a2412 100%);
+    color:#fff4c4;
+    border-radius:20px;
+    font-weight:bold;
+    border:1px solid #ffd24d;
+}
+
+/* 分页 */
+.page-box{
+    margin-top:30px;
+    display:flex;
+    gap:8px;
+    justify-content:center;
+    flex-wrap:wrap;
+}
+
+.page-tip{
+    text-align:center;
+    margin:16px 0;
+    color:#fff8e0;
+    font-weight:bold;
+}
+
+@media(max-width:700px){
+    .card-wrap{
+        grid-template-columns:1fr;
+    }
+
+    .header{
+        flex-direction:column;
+        align-items:flex-start;
+    }
+}
+</style>
+</head>
+<body>
+<div class="container">
+    <div class="header">
+        <h1>喷神｜知名人物档案库</h1>
+        <a href="wiki.html" class="back-link">← 返回神修维基</a>
+    </div>
+
+    <div class="search-area">
+        <input type="text" id="searchInput" placeholder="输入人物名称搜索档案...">
+        <button class="qq-btn" id="searchBtn">检索</button>
+    </div>
+
+    <div class="page-tip" id="pageTip"></div>
+    <div class="card-wrap" id="cardContainer"></div>
+    <div class="page-box" id="pageBox"></div>
+</div>
+
+<script>
+// ========== 100个人物数据，可直接替换 name / desc / tag / avatar ==========
+const personList = [
+    {name:"人物01",desc:"人物简介，在这里填写生平事迹、相关事件与评价。",tag:"喷系元老",avatar:"https://picsum.photos/id/1005/200/200"},
+    {name:"人物02",desc:"人物简介，在这里填写生平事迹、相关事件与评价。",tag:"早期玩家",avatar:"https://picsum.photos/id/1012/200/200"},
+    {name:"人物03",desc:"人物简介，在这里填写生平事迹、相关事件与评价。",tag:"论战者",avatar:"https://picsum.photos/id/1025/200/200"},
+    {name:"人物04",desc:"人物简介，在这里填写生平事迹、相关事件与评价。",tag:"早期玩家",avatar:"https://picsum.photos/id/1033/200/200"},
+    {name:"人物05",desc:"人物简介，在这里填写生平事迹、相关事件与评价。",tag:"喷系元老",avatar:"https://picsum.photos/id/1035/200/200"},
+    {name:"人物06",desc:"人物简介，在这里填写生平事迹、相关事件与评价。",tag:"论战者",avatar:"https://picsum.photos/id/1043/200/200"},
+    {name:"人物07",desc:"人物简介，在这里填写生平事迹、相关事件与评价。",tag:"管理",avatar:"https://picsum.photos/id/1050/200/200"},
+    {name:"人物08",desc:"人物简介，在这里填写生平事迹、相关事件与评价。",tag:"喷系元老",avatar:"https://picsum.photos/id/1059/200/200"},
+    {name:"人物09",desc:"人物简介，在这里填写生平事迹、相关事件与评价。",tag:"早期玩家",avatar:"https://picsum.photos/id/1062/200/200"},
+    {name:"人物10",desc:"人物简介，在这里填写生平事迹、相关事件与评价。",tag:"论战者",avatar:"https://picsum.photos/id/1074/200/200"},
+    {name:"人物11",desc:"人物简介，在这里填写生平事迹、相关事件与评价。",tag:"喷系元老",avatar:"https://picsum.photos/id/1077/200/200"},
+    {name:"人物12",desc:"人物简介，在这里填写生平事迹、相关事件与评价。",tag:"早期玩家",avatar:"https://picsum.photos/id/1081/200/200"},
+    {name:"人物13",desc:"人物简介，在这里填写生平事迹、相关事件与评价。",tag:"论战者",avatar:"https://picsum.photos/id/1084/200/200"},
+    {name:"人物14",desc:"人物简介，在这里填写生平事迹、相关事件与评价。",tag:"管理",avatar:"https://picsum.photos/id/1086/200/200"},
+    {name:"人物15",desc:"人物简介，在这里填写生平事迹、相关事件与评价。",tag:"喷系元老",avatar:"https://picsum.photos/id/1089/200/200"},
+    {name:"人物16",desc:"人物简介，在这里填写生平事迹、相关事件与评价。",tag:"早期玩家",avatar:"https://picsum.photos/id/1092/200/200"},
+    {name:"人物17",desc:"人物简介，在这里填写生平事迹、相关事件与评价。",tag:"论战者",avatar:"https://picsum.photos/id/1096/200/200"},
+    {name:"人物18",desc:"人物简介，在这里填写生平事迹、相关事件与评价。",tag:"喷系元老",avatar:"https://picsum.photos/id/110/200/200"},
+    {name:"人物19",desc:"人物简介，在这里填写生平事迹、相关事件与评价。",tag:"早期玩家",avatar:"https://picsum.photos/id/111/200/200"},
+    {name:"人物20",desc:"人物简介，在这里填写生平事迹、相关事件与评价。",tag:"论战者",avatar:"https://picsum.photos/id/127/200/200"},
+    {name:"人物21",desc:"人物简介，在这里填写生平事迹、相关事件与评价。",tag:"管理",avatar:"https://picsum.photos/id/146/200/200"},
+    {name:"人物22",desc:"人物简介，在这里填写生平事迹、相关事件与评价。",tag:"喷系元老",avatar:"https://picsum.photos/id/169/200/200"},
+    {name:"人物23",desc:"人物简介，在这里填写生平事迹、相关事件与评价。",tag:"早期玩家",avatar:"https://picsum.photos/id/177/200/200"},
+    {name:"人物24",desc:"人物简介，在这里填写生平事迹、相关事件与评价。",tag:"论战者",avatar:"https://picsum.photos/id/211/200/200"},
+    {name:"人物25",desc:"人物简介，在这里填写生平事迹、相关事件与评价。",tag:"喷系元老",avatar:"https://picsum.photos/id/225/200/200"},
+    {name:"人物26",desc:"人物简介，在这里填写生平事迹、相关事件与评价。",tag:"早期玩家",avatar:"https://picsum.photos/id/237/200/200"},
+    {name:"人物27",desc:"人物简介，在这里填写生平事迹、相关事件与评价。",tag:"论战者",avatar:"https://picsum.photos/id/243/200/200"},
+    {name:"人物28",desc:"人物简介，在这里填写生平事迹、相关事件与评价。",tag:"管理",avatar:"https://picsum.photos/id/250/200/200"},
+    {name:"人物29",desc:"人物简介，在这里填写生平事迹、相关事件与评价。",tag:"喷系元老",avatar:"https://picsum.photos/id/274/200/200"},
+    {name:"人物30",desc:"人物简介，在这里填写生平事迹、相关事件与评价。",tag:"早期玩家",avatar:"https://picsum.photos/id/292/200/200"},
+    {name:"人物31",desc:"人物简介，在这里填写生平事迹、相关事件与评价。",tag:"论战者",avatar:"https://picsum.photos/id/312/200/200"},
+    {name:"人物32",desc:"人物简介，在这里填写生平事迹、相关事件与评价。",tag:"喷系元老",avatar:"https://picsum.photos/id/338/200/200"},
+    {name:"人物33",desc:"人物简介，在这里填写生平事迹、相关事件与评价。",tag:"早期玩家",avatar:"https://picsum.photos/id/376/200/200"},
+    {name:"人物34",desc:"人物简介，在这里填写生平事迹、相关事件与评价。",tag:"论战者",avatar:"https://picsum.photos/id/429/200/200"},
+    {name:"人物35",desc:"人物简介，在这里填写生平事迹、相关事件与评价。",tag:"管理",avatar:"https://picsum.photos/id/433/200/200"},
+    {name:"人物36",desc:"人物简介，在这里填写生平事迹、相关事件与评价。",tag:"喷系元老",avatar:"https://picsum.photos/id/447/200/200"},
+    {name:"人物37",desc:"人物简介，在这里填写生平事迹、相关事件与评价。",tag:"早期玩家",avatar:"https://picsum.photos/id/488/200/200"},
+    {name:"人物38",desc:"人物简介，在这里填写生平事迹、相关事件与评价。",tag:"论战者",avatar:"https://picsum.photos/id/510/200/200"},
+    {name:"人物39",desc:"人物简介，在这里填写生平事迹、相关事件与评价。",tag:"喷系元老",avatar:"https://picsum.photos/id/524/200/200"},
+    {name:"人物40",desc:"人物简介，在这里填写生平事迹、相关事件与评价。",tag:"早期玩家",avatar:"https://picsum.photos/id/538/200/200"},
+    {name:"人物41",desc:"人物简介，在这里填写生平事迹、相关事件与评价。",tag:"论战者",avatar:"https://picsum.photos/id/555/200/200"},
+    {name:"人物42",desc:"人物简介，在这里填写生平事迹、相关事件与评价。",tag:"管理",avatar:"https://picsum.photos/id/574/200/200"},
+    {name:"人物43",desc:"人物简介，在这里填写生平事迹、相关事件与评价。",tag:"喷系元老",avatar:"https://picsum.photos/id/593/200/200"},
+    {name:"人物44",desc:"人物简介，在这里填写生平事迹、相关事件与评价。",tag:"早期玩家",avatar:"https://picsum.photos/id/614/200/200"},
+    {name:"人物45",desc:"人物简介，在这里填写生平事迹、相关事件与评价。",tag:"论战者",avatar:"https://picsum.photos/id/638/200/200"},
+    {name:"人物46",desc:"人物简介，在这里填写生平事迹、相关事件与评价。",tag:"喷系元老",avatar:"https://picsum.photos/id/652/200/200"},
+    {name:"人物47",desc:"人物简介，在这里填写生平事迹、相关事件与评价。",tag:"早期玩家",avatar:"https://picsum.photos/id/661/200/200"},
+    {name:"人物48",desc:"人物简介，在这里填写生平事迹、相关事件与评价。",tag:"论战者",avatar:"https://picsum.photos/id/684/200/200"},
+    {name:"人物49",desc:"人物简介，在这里填写生平事迹、相关事件与评价。",tag:"管理",avatar:"https://picsum.photos/id/716/200/200"},
+    {name:"人物50",desc:"人物简介，在这里填写生平事迹、相关事件与评价。",tag:"喷系元老",avatar:"https://picsum.photos/id/721/200/200"},
+    {name:"人物51",desc:"人物简介，在这里填写生平事迹、相关事件与评价。",tag:"早期玩家",avatar:"https://picsum.photos/id/743/200/200"},
+    {name:"人物52",desc:"人物简介，在这里填写生平事迹、相关事件与评价。",tag:"论战者",avatar:"https://picsum.photos/id/759/200/200"},
+    {name:"人物53",desc:"人物简介，在这里填写生平事迹、相关事件与评价。",tag:"喷系元老",avatar:"https://picsum.photos/id/764/200/200"},
+    {name:"人物54",desc:"人物简介，在这里填写生平事迹、相关事件与评价。",tag:"早期玩家",avatar:"https://picsum.photos/id/786/200/200"},
+    {name:"人物55",desc:"人物简介，在这里填写生平事迹、相关事件与评价。",tag:"论战者",avatar:"https://picsum.photos/id/804/200/200"},
+    {name:"人物56",desc:"人物简介，在这里填写生平事迹、相关事件与评价。",tag:"管理",avatar:"https://picsum.photos/id/812/200/200"},
+    {name:"人物57",desc:"人物简介，在这里填写生平事迹、相关事件与评价。",tag:"喷系元老",avatar:"https://picsum.photos/id/823/200/200"},
+    {name:"人物58",desc:"人物简介，在这里填写生平事迹、相关事件与评价。",tag:"早期玩家",avatar:"https://picsum.photos/id/843/200/200"},
+    {name:"人物59",desc:"人物简介，在这里填写生平事迹、相关事件与评价。",tag:"论战者",avatar:"https://picsum.photos/id/847/200/200"},
+    {name:"人物60",desc:"人物简介，在这里填写生平事迹、相关事件与评价。",tag:"喷系元老",avatar:"https://picsum.photos/id/864/200/200"},
+    {name:"人物61",desc:"人物简介，在这里填写生平事迹、相关事件与评价。",tag:"早期玩家",avatar:"https://picsum.photos/id/874/200/200"},
+    {name:"人物62",desc:"人物简介，在这里填写生平事迹、相关事件与评价。",tag:"论战者",avatar:"https://picsum.photos/id/883/200/200"},
+    {name:"人物63",desc:"人物简介，在这里填写生平事迹、相关事件与评价。",tag:"管理",avatar:"https://picsum.photos/id/890/200/200"},
+    {name:"人物64",desc:"人物简介，在这里填写生平事迹、相关事件与评价。",tag:"喷系元老",avatar:"https://picsum.photos/id/903/200/200"},
+    {name:"人物65",desc:"人物简介，在这里填写生平事迹、相关事件与评价。",tag:"早期玩家",avatar:"https://picsum.photos/id/911/200/200"},
+    {name:"人物66",desc:"人物简介，在这里填写生平事迹、相关事件与评价。",tag:"论战者",avatar:"https://picsum.photos/id/923/200/200"},
+    {name:"人物67",desc:"人物简介，在这里填写生平事迹、相关事件与评价。",tag:"喷系元老",avatar:"https://picsum.photos/id/933/200/200"},
+    {name:"人物68",desc:"人物简介，在这里填写生平事迹、相关事件与评价。",tag:"早期玩家",avatar:"https://picsum.photos/id/943/200/200"},
+    {name:"人物69",desc:"人物简介，在这里填写生平事迹、相关事件与评价。",tag:"论战者",avatar:"https://picsum.photos/id/953/200/200"},
+    {name:"人物70",desc:"人物简介，在这里填写生平事迹、相关事件与评价。",tag:"管理",avatar:"https://picsum.photos/id/963/200/200"},
+    {name:"人物71",desc:"人物简介，在这里填写生平事迹、相关事件与评价。",tag:"喷系元老",avatar:"https://picsum.photos/id/973/200/200"},
+    {name:"人物72",desc:"人物简介，在这里填写生平事迹、相关事件与评价。",tag:"早期玩家",avatar:"https://picsum.photos/id/983/200/200"},
+    {name:"人物73",desc:"人物简介，在这里填写生平事迹、相关事件与评价。",tag:"论战者",avatar:"https://picsum.photos/id/993/200/200"},
+    {name:"人物74",desc:"人物简介，在这里填写生平事迹、相关事件与评价。",tag:"喷系元老",avatar:"https://picsum.photos/id/1003/200/200"},
+    {name:"人物75",desc:"人物简介，在这里填写生平事迹、相关事件与评价。",tag:"早期玩家",avatar:"https://picsum.photos/id/1013/200/200"},
+    {name:"人物76",desc:"人物简介，在这里填写生平事迹、相关事件与评价。",tag:"论战者",avatar:"https://picsum.photos/id/1023/200/200"},
+    {name:"人物77",desc:"人物简介，在这里填写生平事迹、相关事件与评价。",tag:"管理",avatar:"https://picsum.photos/id/1033/200/200"},
+    {name:"人物78",desc:"人物简介，在这里填写生平事迹、相关事件与评价。",tag:"喷系元老",avatar:"https://picsum.photos/id/1043/200/200"},
+    {name:"人物79",desc:"人物简介，在这里填写生平事迹、相关事件与评价。",tag:"早期玩家",avatar:"https://picsum.photos/id/1053/200/200"},
+    {name:"人物80",desc:"人物简介，在这里填写生平事迹、相关事件与评价。",tag:"论战者",avatar:"https://picsum.photos/id/1063/200/200"},
+    {name:"人物81",desc:"人物简介，在这里填写生平事迹、相关事件与评价。",tag:"喷系元老",avatar:"https://picsum.photos/id/1073/200/200"},
+    {name:"人物82",desc:"人物简介，在这里填写生平事迹、相关事件与评价。",tag:"早期玩家",avatar:"https://picsum.photos/id/1083/200/200"},
+    {name:"人物83",desc:"人物简介，在这里填写生平事迹、相关事件与评价。",tag:"论战者",avatar:"https://picsum.photos/id/1093/200/200"},
+    {name:"人物84",desc:"人物简介，在这里填写生平事迹、相关事件与评价。",tag:"管理",avatar:"https://picsum.photos/id/1103/200/200"},
+    {name:"人物85",desc:"人物简介，在这里填写生平事迹、相关事件与评价。",tag:"喷系元老",avatar:"https://picsum.photos/id/1113/200/200"},
+    {name:"人物86",desc:"人物简介，在这里填写生平事迹、相关事件与评价。",tag:"早期玩家",avatar:"https://picsum.photos/id/1123/200/200"},
+    {name:"人物87",desc:"人物简介，在这里填写生平事迹、相关事件与评价。",tag:"论战者",avatar:"https://picsum.photos/id/1133/200/200"},
+    {name:"人物88",desc:"人物简介，在这里填写生平事迹、相关事件与评价。",tag:"喷系元老",avatar:"https://picsum.photos/id/1143/200/200"},
+    {name:"人物89",desc:"人物简介，在这里填写生平事迹、相关事件与评价。",tag:"早期玩家",avatar:"https://picsum.photos/id/1153/200/200"},
+    {name:"人物90",desc:"人物简介，在这里填写生平事迹、相关事件与评价。",tag:"论战者",avatar:"https://picsum.photos/id/1163/200/200"},
+    {name:"人物91",desc:"人物简介，在这里填写生平事迹、相关事件与评价。",tag:"管理",avatar:"https://picsum.photos/id/1173/200/200"},
+    {name:"人物92",desc:"人物简介，在这里填写生平事迹、相关事件与评价。",tag:"喷系元老",avatar:"https://picsum.photos/id/1183/200/200"},
+    {name:"人物93",desc:"人物简介，在这里填写生平事迹、相关事件与评价。",tag:"早期玩家",avatar:"https://picsum.photos/id/1193/200/200"},
+    {name:"人物94",desc:"人物简介，在这里填写生平事迹、相关事件与评价。",tag:"论战者",avatar:"https://picsum.photos/id/1203/200/200"},
+    {name:"人物95",desc:"人物简介，在这里填写生平事迹、相关事件与评价。",tag:"喷系元老",avatar:"https://picsum.photos/id/1213/200/200"},
+    {name:"人物96",desc:"人物简介，在这里填写生平事迹、相关事件与评价。",tag:"早期玩家",avatar:"https://picsum.photos/id/1223/200/200"},
+    {name:"人物97",desc:"人物简介，在这里填写生平事迹、相关事件与评价。",tag:"论战者",avatar:"https://picsum.photos/id/1233/200/200"},
+    {name:"人物98",desc:"人物简介，在这里填写生平事迹、相关事件与评价。",tag:"管理",avatar:"https://picsum.photos/id/1243/200/200"},
+    {name:"人物99",desc:"人物简介，在这里填写生平事迹、相关事件与评价。",tag:"喷系元老",avatar:"https://picsum.photos/id/1253/200/200"},
+    {name:"人物100",desc:"人物简介，在这里填写生平事迹、相关事件与评价。",tag:"早期玩家",avatar:"https://picsum.photos/id/1263/200/200"}
+];
+
+// 分页逻辑
+const pageSize = 12;
+let currentPage = 1;
+let filterList = [...personList];
+
+function render(){
+    const totalPage = Math.max(1, Math.ceil(filterList.length / pageSize));
+    const start = (currentPage - 1) * pageSize;
+    const pageData = filterList.slice(start, start + pageSize);
+    const container = document.getElementById("cardContainer");
+    container.innerHTML = "";
+
+    pageData.forEach(item=>{
+        const card = document.createElement("div");
+        card.className = "card-item";
+
+        // 头像：有图片就显示图片，没有就显示名字首字
+        const avatarHtml = item.avatar
+            ? `<div class="card-avatar"><img src="${item.avatar}" alt="${item.name}"></div>`
+            : `<div class="card-avatar"><span class="avatar-text">${item.name.charAt(0)}</span></div>`;
+
+        card.innerHTML = `
+            ${avatarHtml}
+            <div class="card-name">${item.name}</div>
+            <div class="card-desc">${item.desc}</div>
+            <div class="card-tag">${item.tag}</div>
+        `;
+        container.appendChild(card);
+    });
+
+    document.getElementById("pageTip").innerText = `共${filterList.length}条档案，第${currentPage}/${totalPage}页`;
+    renderPageBtn(totalPage);
+}
+
+function renderPageBtn(totalPage){
+    const box = document.getElementById("pageBox");
+    box.innerHTML = "";
+
+    for(let i = 1; i <= totalPage; i++){
+        const btn = document.createElement("button");
+        btn.className = "qq-btn";
+        if(i === currentPage){
+            btn.style.background = "linear-gradient(180deg, #fff4c4 0%, #ffd24d 50%, #f5a623 100%)";
+            btn.style.color = "#7a2412";
+            btn.style.borderColor = "#b00020";
+        }
+        btn.innerText = i;
+        btn.onclick = ()=>{
+            currentPage = i;
+            render();
+        };
+        box.appendChild(btn);
+    }
+}
+
+// 搜索
+function doSearch(){
+    const kw = document.getElementById("searchInput").value.trim().toLowerCase();
+    filterList = personList.filter(p=>
+        p.name.toLowerCase().includes(kw) ||
+        p.desc.toLowerCase().includes(kw) ||
+        p.tag.toLowerCase().includes(kw)
+    );
+    currentPage = 1;
+    render();
+}
+
+document.getElementById("searchBtn").onclick = doSearch;
+document.getElementById("searchInput").addEventListener("keydown", e=>{
+    if(e.key === "Enter") doSearch();
+});
+
+render();
+</script>
+</body>
+</html>

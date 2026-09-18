@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>神修维基 - 成员展示</title>
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+body{
+    background: linear-gradient(135deg, #b81d1d 0%, #ffd24d 100%);
+    background-attachment:fixed;
+    color:#3a2410;
+    font-family:"Microsoft Yahei",sans-serif;
+}
+.container{
+    max-width:1200px;
+    margin:0 auto;
+    padding:20px;
+}
+.wiki-header{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    flex-wrap:wrap;
+    padding:16px 20px;
+    background: linear-gradient(135deg, #ffd56b 0%, #f5a623 100%);
+    border-radius:10px;
+    margin-bottom:24px;
+    border:1px solid #d48806;
+    box-shadow:0 0 14px rgba(255,170,0,0.45);
+}
+.back-home{
+    color:#7a2412;
+    text-decoration:none;
+    font-weight:bold;
+}
+.wiki-title{
+    font-size:22px;
+    font-weight:bold;
+    color:#7a2412;
+}
+.nav-bar a{
+    color:#7a2412;
+    text-decoration:none;
+    margin-left:16px;
+    font-weight:bold;
+    padding:4px 10px;
+    border:1px solid transparent;
+    border-radius:6px;
+    transition:0.3s;
+}
+.nav-bar a:hover{
+    color:#b00020;
+    border-color:#b00020;
+    box-shadow:0 0 10px rgba(176,0,32,0.35);
+}
+.member-wrap{
+}
+.wiki-notice{
+    padding:12px 16px;
+    background: linear-gradient(135deg, #ffe9a8 0%, #ffd24d 100%);
+    border-left:4px solid #b00020;
+    border-radius:6px;
+    margin-bottom:20px;
+    color:#5c1a10;
+    font-weight:bold;
+}
+.member-card-list{
+    display:grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px,1fr));
+    gap:20px;
+}
+.member-card{
+    background: linear-gradient(160deg, #fff4c4 0%, #ffd24d 45%, #f5a623 100%);
+    border:1px solid #d48806;
+    border-radius:12px;
+    padding:20px;
+    transition:0.25s;
+    box-shadow:0 0 10px rgba(255,170,0,0.35);
+}
+.member-card:hover{
+    border-color:#b00020;
+    box-shadow:0 0 18px rgba(255,140,0,0.65);
+    transform:translateY(-4px);
+}
+.member-avatar{
+    width:100px;
+    height:100px;
+    border-radius:50%;
+    object-fit:cover;
+    display:block;
+    margin:0 auto 14px;
+    border:3px solid #b00020;
+    box-shadow:0 0 10px rgba(255,210,77,0.8);
+}
+.member-card h3{
+    text-align:center;
+    color:#7a2412;
+    margin-bottom:10px;
+    font-size:20px;
+}
+.member-card p{
+    line-height:1.6;
+    color:#5c1a10;
+    margin-bottom:6px;
+    text-align:center;
+    font-weight:600;
+}
+.card-btn{
+    display:block;
+    width:120px;
+    text-align:center;
+    margin:14px auto 0;
+    padding:8px 0;
+    background: linear-gradient(135deg, #b00020 0%, #7a2412 100%);
+    color:#fff4c4;
+    text-decoration:none;
+    border-radius:6px;
+    font-weight:bold;
+    border:1px solid #ffd24d;
+    transition:0.3s;
+}
+.card-btn:hover{
+    background: linear-gradient(135deg, #d12030 0%, #b00020 100%);
+    box-shadow:0 0 12px rgba(255,210,77,0.8);
+    transform: translateY(-2px);
+}
+</style>
+</head>
+<body>
+<div class="container">
+    <header class="wiki-header">
+        <a href="index.html" class="back-home">← 返回首页</a>
+        <span class="wiki-title">神修维基成员档案</span>
+        <nav class="nav-bar">
+            <a href="wiki.html">维基主页</a>
+            <a href="forum.html">论坛</a>
+            <a href="community.html">社区</a>
+            <a href="penshen.html">喷神</a>
+            <a href="history.html">历史档案</a>
+            <a href="allies.html">盟友势力</a>
+        </nav>
+    </header>
+    <div class="member-wrap">
+        <div class="wiki-notice">
+            成员档案页面：展示神修集团维基成员。
+        </div>
+        <div class="member-card-list">
+            <!-- 核心4人 -->
+            <div class="member-card">
+                <img class="member-avatar" src="https://picsum.photos/id/1005/100/100" alt="帝王傲世头像">
+                <h3>帝王傲世</h3>
+                <p>职位：神修维基创始人、帝圈皇帝</p>
+                <p>简介：神修维基和帝圈的建立者之一</p>
+            </div>
+            <div class="member-card">
+                <img class="member-avatar" src="https://picsum.photos/id/1025/100/100" alt="海豚头像">
+                <h3>帝王傲世</h3>
+                <p>职位：神修维基站长</p>
+                <p>简介：负责网站搭建、代码维护</p>
+            </div>
+            <div class="member-card">
+                <img class="member-avatar" src="https://picsum.photos/id/1074/100/100" alt="渡厄头像">
+                <h3>包青天</h3>
+                <p>职位：神修维基技术部长</p>
+                <p>简介：负责神修维基各类技术使用教导</p>
+            </div>
+            <div class="member-card">
+                <img class="member-avatar" src="https://picsum.photos/id/1062/100/100" alt="白织头像">
+                <h3>沐语</h3>
+                <p>职位：神修维基外交部长</p>
+                <p>简介：对接外部组织，处理合作事务</p>
+            </div>
+            <!-- 新增16名成员，合计20人 -->
+            <div class="member-card">
+                <img class="member-avatar" src="https://picsum.photos/id/1011/100/100" alt="凌渊头像">
+                <h3>讨戈</h3>
+                <p>职位：神修历代</p>
+                <p>简介：GC现任 剑义创始人 黑水现任</p>
+            </div>
+            <div class="member-card">
+                <img class="member-avatar" src="https://picsum.photos/id/1035/100/100" alt="烬夜头像">
+                <h3>xx</h3>
+                <p>职位：神修成员</p>
+                <p>简介：</p>
+            </div>
+            <div class="member-card">
+                <img class="member-avatar" src="https://picsum.photos/id/1039/100/100" alt="墨殇头像">
+                <h3>xx</h3>
+                <p>职位：神修成员</p>
+                <p>简介：</p>
+            </div>
+            <div class="member-card">
+                <img class="member-avatar" src="https://picsum.photos/id/1043/100/100" alt="孤宸头像">
+                <h3>xx</h3>
+                <p>职位：神修成员</p>
+                <p>简介：</p>
+            </div>
+            <div class="member-card">
+                <img class="member-avatar" src="https://picsum.photos/id/1048/100/100" alt="辞忧头像">
+                <h3>xx</h3>
+                <p>职位：神修成员</p>
+                <p>简介：</p>
+            </div>
+            <div class="member-card">
+                <img class="member-avatar" src="https://picsum.photos/id/1050/100/100" alt="玄寂头像">
+                <h3>xx</h3>
+                <p>职位：神修成员</p>
+                <p>简介：</p>
+            </div>
+            <div class="member-card">
+                <img class="member-avatar" src="https://picsum.photos/id/1054/100/100" alt="夙离头像">
+                <h3>xx</h3>
+                <p>职位：神修成员</p>
+                <p>简介：</p>
+            </div>
+            <div class="member-card">
+                <img class="member-avatar" src="https://picsum.photos/id/1060/100/100" alt="临渊头像">
+                <h3>xx</h3>
+                <p>职位：神修成员</p>
+                <p>简介：</p>
+            </div>
+            <div class="member-card">
+                <img class="member-avatar" src="https://picsum.photos/id/1066/100/100" alt="夜珩头像">
+                <h3>xx</h3>
+                <p>职位：神修成员</p>
+                <p>简介：</p>
+            </div>
+            <div class="member-card">
+                <img class="member-avatar" src="https://picsum.photos/id/1070/100/100" alt="砚尘头像">
+                <h3>xx</h3>
+                <p>职位：神修成员</p>
+                <p>简介：</p>
+            </div>
+            <div class="member-card">
+                <img class="member-avatar" src="https://picsum.photos/id/1078/100/100" alt="祁烬头像">
+                <h3>xx</h3>
+                <p>职位：神修成员</p>
+                <p>简介：</p>
+            </div>
+            <div class="member-card">
+                <img class="member-avatar" src="https://picsum.photos/id/1080/100/100" alt="萧寂头像">
+                <h3>xx</h3>
+                <p>职位：神修成员</p>
+                <p>简介：</p>
+            </div>
+            <div class="member-card">
+                <img class="member-avatar" src="https://picsum.photos/id/1083/100/100" alt="鹤辞头像">
+                <h3>xx</h3>
+                <p>职位：神修成员</p>
+                <p>简介：</p>
+            </div>
+            <div class="member-card">
+                <img class="member-avatar" src="https://picsum.photos/id/1084/100/100" alt="沧澜头像">
+                <h3>xx</h3>
+                <p>职位：神修成员</p>
+                <p>简介：</p>
+            </div>
+            <div class="member-card">
+                <img class="member-avatar" src="https://picsum.photos/id/1086/100/100" alt="烬殇头像">
+                <h3>xx</h3>
+                <p>职位：神修成员</p>
+                <p>简介：</p>
+            </div>
+            <div class="member-card">
+                <img class="member-avatar" src="https://picsum.photos/id/1088/100/100" alt="星衍头像">
+                <h3>xx</h3>
+                <p>职位：神修成员</p>
+                <p>简介：</p>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
