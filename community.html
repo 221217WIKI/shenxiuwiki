@@ -109,6 +109,7 @@ body{
     display:grid;
     grid-template-columns:260px 1fr 240px;
     height:calc(100vh - 72px);
+    width:100%;
 }
 .left-panel{
     background:#220b0b;
@@ -194,6 +195,7 @@ body{
     margin:12px 0;
     display:flex;
     gap:10px;
+    align-items:flex-start;
 }
 .msg-self{flex-direction:row-reverse;}
 .msg-avatar{
@@ -212,9 +214,10 @@ body{
     font-size:18px;
 }
 .msg-body{
-    max-width:60%;
+    max-width:65%;
     display:flex;
     flex-direction:column;
+    min-width:0;
 }
 .msg-self .msg-body{align-items:flex-end;}
 .msg-name{
@@ -230,6 +233,8 @@ body{
     border:1px solid #8b5a00;
     word-break:break-word;
     white-space:pre-wrap;
+    width:fit-content;
+    max-width:100%;
 }
 .msg-self .msg-box{background:#601010;border-color:#ffd700;}
 .msg-image{
@@ -492,11 +497,13 @@ body{
     .wiki-header{padding:10px;}
     .wiki-title{font-size:18px;}
     .qq-main{
-        grid-template-columns: 0 1fr 0;
+        grid-template-columns: 1fr;
         height:calc(100vh - 62px);
     }
     .left-panel,.right-panel{display:none;}
-    .msg-box{max-width:80%;}
+    .chat-panel{border-right:none;}
+    .msg-body{max-width:80%;}
+    .msg-box{max-width:100%;}
     .emoji-panel{right:10px;left:10px;width:auto;}
 }
 </style>
