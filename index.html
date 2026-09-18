@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>神修维基 - 首页</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:"Microsoft Yahei",sans-serif;}
+/* 金红色渐变背景 */
+body{
+    background: linear-gradient(135deg, #991515 0%, #e6b020 100%);
+    background-attachment:fixed;
+    color:#fff8e0;
+    line-height:1.7;
+}
+.container{max-width:1400px;margin:0 auto;padding:15px;}
+.wiki-header{display:flex;justify-content:space-between;align-items:center;padding:15px 0;border-bottom:1px solid #fff8e044;margin-bottom:20px;flex-wrap:wrap;gap:10px;}
+.wiki-header a{color:#fff8e0;text-decoration:none;padding:4px 10px;border:1px solid #fff8e0;border-radius:6px;}
+.wiki-title{font-size:24px;letter-spacing:4px;font-weight:bold;color:#fff8e0;}
+.nav-bar{display:flex;gap:12px;flex-wrap:wrap;}
+/*首页样式 - 全部居中对称*/
+.home-wrap{text-align:center;padding:30px 10px;}
+.crest-box{
+    padding:20px;
+}
+.home-crest{
+    width:260px;
+    margin:0 auto;
+    display:block;
+    filter: drop-shadow(0 0 12px #ffdd8877);
+}
+.home-text-block{
+    max-width:800px;
+    margin:25px auto;
+    padding:20px;
+    background:rgba(0,0,0,0.35);
+    border:1px solid #fff8e033;
+    border-radius:10px;
+    font-size:16px;
+}
+.home-buttons{
+    display:flex;
+    gap:15px;
+    justify-content:center;
+    flex-wrap:wrap;
+    margin:30px 0;
+}
+.btn{
+    padding:12px 26px;
+    border:1px solid #fff8e0;
+    border-radius:8px;
+    color:#fff8e0;
+    text-decoration:none;
+    font-size:18px;
+    background:rgba(0,0,0,0.25);
+    transition: all 0.3s ease;
+}
+.btn:hover{
+    background:rgba(255,248,224,0.2);
+    box-shadow: 0 0 15px #ffdd8880;
+    transform: translateY(-3px);
+}
+.home-flag img{
+    width:480px;
+    margin-top:30px;
+    border-radius:6px;
+    box-shadow:0 0 18px rgba(255,221,136,0.3);
+}
+.flag-tip{
+    margin-top:8px;
+    opacity:0.75;
+    font-size:14px;
+}
+.home-footer-note{
+    margin-top:40px;
+    padding:12px;
+    opacity:0.65;
+    font-size:14px;
+}
+/*手机适配，保持对称*/
+@media (max-width:768px){
+    .nav-bar{flex-wrap:wrap;justify-content:center;}
+    .home-flag img{width:100%;}
+}
+</style>
+</head>
+<body>
+<div class="container">
+    <header class="wiki-header">
+        <span class="wiki-title">神修维基</span>
+        <nav class="nav-bar">
+            <a href="wiki.html">维基主页</a>
+            <a href="members.html">成员展示</a>
+            <a href="forum.html">论坛</a>
+            <a href="community.html">社区</a>
+            <a href="penshen.html">喷神</a>
+            <a href="history.html">历史档案</a>
+            <a href="allies.html">盟友势力</a>
+        </nav>
+    </header>
+    <div class="home-wrap">
+        <!-- 神修纹章 -->
+        <div class="crest-box">
+            <img src="神修维基.png" class="home-crest" width="300" alt="神修纹章">
+        </div>
+        <h1>万朝俯首 · 神修维基</h1>
+        <p class="home-desc">记录神修历史、人物档案、组织事件 | 神修维基官方站点</p>
+        <div class="home-text-block">
+            <p>神修维基是神修官方档案站点，收录集喷系发展历史、核心人物传记、组织大事记。
+            站点内置维基词条库、成员档案库与交流论坛，用于整理与留存喷系全部资料。</p>
+        </div>
+        <!-- 入口按钮组 对称排列 -->
+        <div class="home-buttons">
+            <a href="wiki.html" class="btn">进入维基</a>
+            <a href="members.html" class="btn">查看成员</a>
+            <a href="forum.html" class="btn">前往论坛</a>
+            <a href="community.html" class="btn"> 社区</a>
+            <a href="penshen.html" class="btn"> 喷神</a>
+            <a href="history.html" class="btn"> 历史档案</a>
+            <a href="allies.html" class="btn"> 盟友势力</a>
+        </div>
+         <!-- 神修旗帜 -->
+        <div class="home-flag">
+            <img src="神修旗帜.jpg" alt="神修旗帜">
+            <p class="flag-tip">神修旗帜</p>
+        </div>
+        <div class="home-footer-note">
+            <p>⚠️本网站为兴趣创作站点，所有内容仅为圈子历史记录</p>
+        </div>
+    </div>
+</div>
+<script src="assets/js/script.js"></script>
+</body>
+</html>

@@ -1,0 +1,612 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>神修社区 - 论坛</title>
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    -webkit-tap-highlight-color: transparent;
+}
+body{
+    background: linear-gradient(135deg, #991515 0%, #e6b020 100%);
+    background-attachment: fixed;
+    color:#3a2410;
+    font-family:"Microsoft Yahei",sans-serif;
+    font-size:14px;
+}
+.wrap{
+    max-width:1100px;
+    margin:20px auto;
+    border:1px solid #d48806;
+    box-shadow:0 0 18px rgba(224,160,20,0.55);
+    overflow:hidden;
+    border-radius:10px;
+}
+/* 金红帝王风格标题栏 */
+.qq-title-bar{
+    background:linear-gradient(135deg, #b00020 0%, #e6b020 100%);
+    height:32px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    color:#fff8e0;
+    padding:0 12px;
+}
+.qq-title-bar h1{
+    font-size:14px;
+    font-weight:bold;
+    letter-spacing:1px;
+}
+.title-buttons span{
+    display:inline-block;
+    width:24px;
+    height:22px;
+    text-align:center;
+    line-height:22px;
+    cursor:pointer;
+    border-radius:3px;
+}
+.title-buttons span:hover{
+    background:rgba(255,255,255,0.2);
+}
+.main{
+    display:grid;
+    grid-template-columns:200px 1fr;
+    min-height:520px;
+}
+/* 侧边栏 */
+.side{
+    background:linear-gradient(160deg, #fff4c4 0%, #ffd24d 45%, #f5a623 100%);
+    border-right:1px solid #d48806;
+    padding:12px;
+}
+.side-group{
+    margin-bottom:12px;
+}
+.side-group h3{
+    font-size:14px;
+    color:#7a2412;
+    padding:6px 0;
+    border-bottom:1px solid #d48806;
+    margin-bottom:8px;
+}
+.side-item{
+    padding:6px 6px 6px 12px;
+    cursor:pointer;
+    border-radius:6px;
+    color:#7a2412;
+    font-weight:bold;
+    transition:0.25s;
+}
+.side-item:hover{
+    background:#ffdd99;
+    box-shadow:0 0 6px rgba(176,0,32,0.25);
+}
+.side-item.active{
+    background:linear-gradient(135deg,#b00020,#991515);
+    color:#fff8e0;
+}
+/* 论坛主内容区 */
+.content{
+    background:rgba(255,248,224,0.92);
+    padding:14px;
+    overflow:auto;
+}
+.tool-bar{
+    padding:8px 0;
+    border-bottom:1px solid #d48806;
+    margin-bottom:12px;
+    display:flex;
+    gap:10px;
+    flex-wrap:wrap;
+    align-items:center;
+}
+.qq-btn{
+    border:1px solid #b00020;
+    background:linear-gradient(135deg, #ffd24d,#b00020);
+    color:#fff8e0;
+    padding:4px 12px;
+    border-radius:6px;
+    cursor:pointer;
+    font-size:13px;
+    font-weight:bold;
+    transition:0.25s;
+}
+.qq-btn:hover{
+    box-shadow:0 0 10px rgba(176,0,32,0.35);
+}
+.qq-btn:active{
+    background:#991515;
+    transform:scale(0.97);
+}
+/* 搜索框 + 自动提示下拉 */
+.search-box-wrap{
+    position:relative;
+}
+#searchInput{
+    width:260px;
+    border:1px solid #d48806;
+    padding:5px 8px;
+    border-radius:6px;
+    background:#fff8e0;
+    color:#3a2410;
+    outline:none;
+}
+#searchInput:focus{
+    border-color:#b00020;
+    box-shadow:0 0 8px rgba(176,0,32,0.25);
+}
+.search-suggest{
+    position:absolute;
+    top:100%;
+    left:0;
+    width:260px;
+    background:#fff8e0;
+    border:1px solid #d48806;
+    border-top:none;
+    z-index:100;
+    max-height:220px;
+    overflow-y:auto;
+    display:none;
+    border-radius:0 0 6px 6px;
+}
+.search-suggest-item{
+    padding:7px 10px;
+    cursor:pointer;
+    color:#3a2410;
+}
+.search-suggest-item:hover{
+    background:#ffdd99;
+}
+.post-list{
+    border:1px solid #d48806;
+    border-radius:6px;
+    overflow:hidden;
+}
+.post-header{
+    background:linear-gradient(135deg,#b00020,#991515);
+    display:grid;
+    grid-template-columns:4fr 1fr 1fr 1fr 80px;
+    padding:8px 10px;
+    font-weight:bold;
+    border-bottom:1px solid #d48806;
+    color:#fff8e0;
+}
+.post-item{
+    display:grid;
+    grid-template-columns:4fr 1fr 1fr 1fr 80px;
+    padding:10px;
+    border-bottom:1px solid #e2c280;
+    align-items:center;
+    color:#3a2410;
+    transition:0.2s;
+}
+.post-item:hover{
+    background:#ffe9a8;
+}
+.post-title{
+    color:#b00020;
+    cursor:pointer;
+    font-weight:bold;
+}
+.post-title:hover{
+    text-decoration:underline;
+}
+.del-post-btn{
+    border:1px solid #b00020;
+    background:#b00020;
+    color:#fff8e0;
+    padding:3px 7px;
+    border-radius:4px;
+    cursor:pointer;
+    font-size:12px;
+}
+.del-post-btn:hover{
+    background:#991515;
+}
+/* 弹窗遮罩 */
+.modal-mask{
+    position:fixed;
+    inset:0;
+    background:rgba(0,0,0,0.65);
+    display:none;
+    align-items:center;
+    justify-content:center;
+    z-index:999;
+    padding:10px;
+}
+.modal-mask.show{
+    display:flex;
+}
+.modal-box{
+    width:100%;
+    max-width:520px;
+    border:1px solid #d48806;
+    background:#fff8e0;
+    box-shadow:0 0 20px rgba(180,30,30,0.5);
+    border-radius:8px;
+}
+.modal-title{
+    background:linear-gradient(135deg,#b00020,#991515);
+    color:#fff8e0;
+    padding:7px 12px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    border-radius:8px 8px 0 0;
+}
+.modal-body{
+    padding:16px;
+    color:#3a2410;
+}
+.modal-close{
+    cursor:pointer;
+    padding:0 8px;
+    font-size:18px;
+}
+.modal-footer{
+    padding:10px 16px;
+    border-top:1px solid #d48806;
+    display:flex;
+    align-items:flex-end;
+    gap:10px;
+}
+input,textarea{
+    width:100%;
+    border:1px solid #d48806;
+    padding:7px;
+    border-radius:6px;
+    margin:5px 0 12px;
+    font-family:inherit;
+    background:#ffffff;
+    color:#3a2410;
+    outline:none;
+}
+input:focus,textarea:focus{
+    border-color:#b00020;
+    box-shadow:0 0 8px rgba(176,0,32,0.25);
+}
+textarea{
+    min-height:140px;
+    resize:vertical;
+}
+/* 帖子详情弹窗 */
+.post-detail .reply-item{
+    border:1px solid #d48806;
+    background:#ffe9a8;
+    margin-bottom:10px;
+    padding:10px;
+    border-radius:6px;
+}
+.reply-author{
+    color:#b00020;
+    font-weight:bold;
+    margin-bottom:5px;
+}
+/* 回复输入区域，左下角回复按钮 */
+.reply-wrap{
+    width:100%;
+}
+#replyInput{
+    width:100%;
+    min-height:70px;
+}
+#submitReply{
+    margin-top:8px;
+}
+/* 移动端适配 */
+@media (max-width:720px){
+    .main{
+        grid-template-columns:1fr;
+    }
+    .post-header,.post-item{
+        grid-template-columns:3fr 1fr;
+    }
+    .modal-footer{
+        flex-direction:column;
+        align-items:stretch;
+    }
+    #searchInput{
+        width:160px;
+    }
+    .search-suggest{
+        width:160px;
+    }
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+    <!-- 老QQ窗口标题栏 -->
+    <div class="qq-title-bar">
+        <h1>神修社区 - 论坛</h1>
+        <div class="title-buttons">
+            <span>_</span>
+            <span>□</span>
+            <span>×</span>
+        </div>
+    </div>
+    <div class="main">
+        <div class="side">
+            <div class="side-group">
+                <h3>⚙ 操作</h3>
+                <div class="side-item" id="newPostBtn">发布新帖</div>
+                <div class="side-item" id="editInfoBtn">修改个人资料</div>
+            </div>
+        </div>
+        <div class="content">
+            <div class="tool-bar">
+                <button class="qq-btn" id="btnRefresh">刷新</button>
+                <button class="qq-btn" id="btnBackHome">返回神修维基</button>
+                <div class="search-box-wrap">
+                    <input type="text" id="searchInput" placeholder="搜索标题/楼主名字">
+                    <div class="search-suggest" id="searchSuggest"></div>
+                </div>
+            </div>
+            <div class="post-list">
+                <div class="post-header">
+                    <div>标题</div>
+                    <div>作者</div>
+                    <div>回复</div>
+                    <div>时间</div>
+                    <div>操作</div>
+                </div>
+                <div id="postListBox"></div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- 新建帖子弹窗 -->
+<div class="modal-mask" id="newPostModal">
+    <div class="modal-box">
+        <div class="modal-title">
+            <span>发布新帖子</span>
+            <span class="modal-close" id="closeNewPost">×</span>
+        </div>
+        <div class="modal-body">
+            <label>帖子标题</label>
+            <input type="text" id="postTitle" placeholder="输入帖子标题">
+            <label>帖子内容</label>
+            <textarea id="postContent" placeholder="在这里输入帖子正文..."></textarea>
+        </div>
+        <div class="modal-footer">
+            <button class="qq-btn" id="submitPost">发表帖子</button>
+        </div>
+    </div>
+</div>
+<!-- 帖子详情+回复弹窗 -->
+<div class="modal-mask" id="postDetailModal">
+    <div class="modal-box post-detail">
+        <div class="modal-title">
+            <span id="detailTitle">帖子详情</span>
+            <span class="modal-close" id="closeDetail">×</span>
+        </div>
+        <div class="modal-body" id="detailBody">
+        </div>
+        <div class="modal-footer">
+            <div class="reply-wrap">
+                <textarea id="replyInput" placeholder="写回复..."></textarea>
+                <!-- 左下角回复按钮 -->
+                <button class="qq-btn" id="submitReply">回复</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- 修改资料弹窗 -->
+<div class="modal-mask" id="profileModal">
+    <div class="modal-box">
+        <div class="modal-title">
+            <span>修改个人资料</span>
+            <span class="modal-close" id="closeProfile">×</span>
+        </div>
+        <div class="modal-body">
+            <label>昵称</label>
+            <input type="text" id="nickInput" value="帝王傲世">
+        </div>
+        <div class="modal-footer">
+            <button class="qq-btn" id="saveProfile">保存</button>
+        </div>
+    </div>
+</div>
+<script>
+// 本地存储数据
+let userInfo = JSON.parse(localStorage.getItem("shenxiuUser")) || {nick:"帝王傲世"};
+let postData = JSON.parse(localStorage.getItem("shenxiuForumPost")) || [];
+let currentViewPostId = null;
+let filterPostList = [...postData];
+// 渲染帖子列表
+function renderPosts(list){
+    const box = document.getElementById("postListBox");
+    box.innerHTML = "";
+    const useList = list || filterPostList;
+    useList.forEach((p,idx)=>{
+        const realIndex = postData.findIndex(item=>item.id === p.id);
+        const div = document.createElement("div");
+        div.className = "post-item";
+        div.innerHTML = `
+            <div class="post-title" data-realidx="${realIndex}">${p.title}</div>
+            <div>${p.author}</div>
+            <div>${p.replyList.length}</div>
+            <div>${p.time}</div>
+            <div><button class="del-post-btn" data-realidx="${realIndex}">删除</button></div>
+        `;
+        box.appendChild(div);
+    })
+    // 帖子点击查看详情
+    document.querySelectorAll(".post-title").forEach(el=>{
+        el.onclick = function(){
+            const ridx = this.dataset.realidx;
+            openPostDetail(ridx);
+        }
+    })
+    // 删除帖子按钮
+    document.querySelectorAll(".del-post-btn").forEach(el=>{
+        el.onclick = function(e){
+            e.stopPropagation();
+            const ridx = this.dataset.realidx;
+            if(confirm("确认删除该帖子？删除后不可恢复！")){
+                postData.splice(ridx,1);
+                localStorage.setItem("shenxiuForumPost",JSON.stringify(postData));
+                doSearch();
+            }
+        }
+    })
+}
+// 打开帖子详情弹窗
+function openPostDetail(idx){
+    currentViewPostId = idx;
+    const p = postData[idx];
+    document.getElementById("detailTitle").innerText = p.title;
+    let html = `<div style="margin-bottom:12px;">
+        <div class="reply-author">楼主：${p.author} ${p.time}</div>
+        <div>${p.content}</div>
+    </div>`;
+    p.replyList.forEach(r=>{
+        html += `<div class="reply-item">
+            <div class="reply-author">${r.author}：</div>
+            <div>${r.content}</div>
+        </div>`;
+    })
+    document.getElementById("detailBody").innerHTML = html;
+    openModal(document.getElementById("postDetailModal"));
+}
+// 提交回复
+function submitReplyFunc(){
+    const text = document.getElementById("replyInput").value.trim();
+    if(!text) return;
+    const p = postData[currentViewPostId];
+    p.replyList.push({
+        author:userInfo.nick,
+        content:text
+    })
+    localStorage.setItem("shenxiuForumPost",JSON.stringify(postData));
+    openPostDetail(currentViewPostId);
+    document.getElementById("replyInput").value = "";
+}
+// 提交新帖子
+document.getElementById("submitPost").onclick = function(){
+    const title = document.getElementById("postTitle").value.trim();
+    const content = document.getElementById("postContent").value.trim();
+    if(!title || !content){
+        alert("标题和内容不能为空");
+        return;
+    }
+    const newPost = {
+        id:Date.now(),
+        title,
+        content,
+        author: userInfo.nick,
+        time:new Date().toLocaleString(),
+        replyList:[]
+    }
+    postData.unshift(newPost);
+    localStorage.setItem("shenxiuForumPost",JSON.stringify(postData));
+    renderPosts();
+    closeModal(document.getElementById("newPostModal"));
+    document.getElementById("postTitle").value = "";
+    document.getElementById("postContent").value = "";
+}
+// 回复按钮点击事件
+document.getElementById("submitReply").onclick = submitReplyFunc;
+// 回车直接发送回复
+document.getElementById("replyInput").addEventListener("keydown", function(e){
+    if(e.key === "Enter" && !e.shiftKey){
+        e.preventDefault();
+        submitReplyFunc();
+    }
+})
+// 修改资料保存
+document.getElementById("saveProfile").onclick = function(){
+    const nick = document.getElementById("nickInput").value.trim();
+    if(nick){
+        userInfo.nick = nick;
+        localStorage.setItem("shenxiuUser",JSON.stringify(userInfo));
+    }
+    closeModal(document.getElementById("profileModal"));
+}
+// 弹窗通用函数
+function openModal(dom){
+    dom.classList.add("show");
+}
+function closeModal(dom){
+    dom.classList.remove("show");
+}
+// ===== 搜索功能 =====
+const searchInput = document.getElementById("searchInput");
+const searchSuggest = document.getElementById("searchSuggest");
+function doSearch(){
+    const kw = searchInput.value.trim().toLowerCase();
+    searchSuggest.style.display = "none";
+    if(kw.length ===0){
+        filterPostList = [...postData];
+        renderPosts();
+        return;
+    }
+    filterPostList = postData.filter(item=>{
+        return item.title.toLowerCase().includes(kw) || item.author.toLowerCase().includes(kw);
+    })
+    renderPosts(filterPostList);
+}
+function showSuggest(){
+    const kw = searchInput.value.trim().toLowerCase();
+    searchSuggest.innerHTML = "";
+    if(kw.length <2){
+        searchSuggest.style.display = "none";
+        return;
+    }
+    const matchList = postData.filter(item=>{
+        return item.title.toLowerCase().includes(kw) || item.author.toLowerCase().includes(kw);
+    })
+    if(matchList.length ===0){
+        searchSuggest.style.display = "none";
+        return;
+    }
+    matchList.forEach(p=>{
+        const div = document.createElement("div");
+        div.className = "search-suggest-item";
+        div.innerText = `【${p.author}】${p.title}`;
+        div.onclick = ()=>{
+            searchInput.value = p.title;
+            filterPostList = [p];
+            renderPosts(filterPostList);
+            searchSuggest.style.display = "none";
+        }
+        searchSuggest.appendChild(div);
+    })
+    searchSuggest.style.display = "block";
+}
+searchInput.addEventListener("input",showSuggest);
+searchInput.addEventListener("keydown",(e)=>{
+    if(e.key === "Enter"){
+        doSearch();
+        searchSuggest.style.display = "none";
+    }
+})
+// 点击页面空白关闭下拉
+document.addEventListener("click",(e)=>{
+    if(!document.querySelector(".search-box-wrap").contains(e.target)){
+        searchSuggest.style.display = "none";
+    }
+})
+// 按钮绑定
+document.getElementById("newPostBtn").onclick = ()=>openModal(document.getElementById("newPostModal"));
+document.getElementById("closeNewPost").onclick = ()=>closeModal(document.getElementById("newPostModal"));
+document.getElementById("closeDetail").onclick = ()=>closeModal(document.getElementById("postDetailModal"));
+document.getElementById("editInfoBtn").onclick = ()=>openModal(document.getElementById("profileModal"));
+document.getElementById("closeProfile").onclick = ()=>closeModal(document.getElementById("profileModal"));
+document.getElementById("btnRefresh").onclick = ()=>{
+    searchInput.value = "";
+    filterPostList = [...postData];
+    renderPosts();
+};
+document.getElementById("btnBackHome").onclick = ()=>location.href="wiki.html";
+// 初始化
+renderPosts();
+document.getElementById("nickInput").value = userInfo.nick;
+</script>
+</body>
+</html>

@@ -1,0 +1,1286 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>神修维基 - 社区聊天室</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:"Microsoft Yahei",sans-serif;}
+body{
+    background:#180c0c;
+    color:#f7e9d2;
+}
+.wiki-header{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    flex-wrap:wrap;
+    padding:14px 20px;
+    background:#220b0b;
+    border-bottom:2px solid #b8860b;
+}
+.wiki-header a{
+    color:#ffdd77;
+    text-decoration:none;
+    padding:4px 8px;
+}
+.wiki-header a:hover{background:#991111;border-radius:4px;}
+.wiki-title{font-size:22px;font-weight:bold;color:#ffd700;}
+.container{max-width:1400px;margin:0 auto;}
+
+.auth-mask{
+    position:fixed;
+    inset:0;
+    background:rgba(0,0,0,0.75);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    z-index:999;
+}
+.auth-box{
+    background:#220b0b;
+    border:2px solid #b8860b;
+    border-radius:10px;
+    padding:30px;
+    width:100%;
+    max-width:420px;
+}
+.auth-title{
+    text-align:center;
+    font-size:26px;
+    color:#ffd700;
+    margin-bottom:24px;
+    letter-spacing:2px;
+}
+.tab-group{
+    display:flex;
+    margin-bottom:20px;
+    border-bottom:1px solid #8b5a00;
+}
+.tab-item{
+    flex:1;
+    text-align:center;
+    padding:10px;
+    cursor:pointer;
+    color:#c9a860;
+}
+.tab-item.active{
+    color:#ffd700;
+    border-bottom:2px solid #ff2222;
+}
+.form-box{display:none;}
+.form-box.active{display:block;}
+.form-item{margin-bottom:16px;}
+.form-item label{
+    display:block;
+    margin-bottom:6px;
+    color:#ffd700;
+}
+.form-item input{
+    width:100%;
+    padding:10px 14px;
+    background:#180c0c;
+    border:1px solid #b8860b;
+    color:#f7e9d2;
+    border-radius:6px;
+    outline:none;
+}
+.form-item input:focus{border-color:#ff2222;}
+.submit-btn{
+    width:100%;
+    padding:12px;
+    background:#991111;
+    border:1px solid #ffd700;
+    color:#ffd700;
+    border-radius:6px;
+    cursor:pointer;
+    font-size:16px;
+}
+.submit-btn:hover{background:#bb2222;}
+.submit-btn:disabled{opacity:0.6;cursor:not-allowed;}
+.tip-text{
+    margin-top:14px;
+    text-align:center;
+    font-size:14px;
+    color:#dd9966;
+}
+
+.qq-main{
+    display:grid;
+    grid-template-columns:260px 1fr 240px;
+    height:calc(100vh - 72px);
+}
+.left-panel{
+    background:#220b0b;
+    border-right:1px solid #8b5a00;
+    overflow-y:auto;
+}
+.tab-bar{display:flex;border-bottom:1px solid #8b5a00;}
+.tab{flex:1;text-align:center;padding:10px 0;cursor:pointer;color:#c9a860;}
+.tab.active{background:#331414;color:#ffd700;font-weight:bold;border-bottom:2px solid #ff2222;}
+.search-bar{
+    padding:10px;
+    border-bottom:1px solid #441818;
+}
+.search-bar input{
+    width:100%;
+    padding:8px;
+    background:#180c0c;
+    border:1px solid #b8860b;
+    color:#f7e9d2;
+    border-radius:4px;
+}
+.group-item, .friend-item{
+    padding:10px 14px;
+    cursor:pointer;
+    border-bottom:1px solid #441818;
+    display:flex;
+    align-items:center;
+    gap:10px;
+}
+.group-item:hover,.friend-item:hover{background:#331414;}
+.list-avatar{
+    width:36px;
+    height:36px;
+    border-radius:4px;
+    background:#991111;
+    color:#ffd700;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-weight:bold;
+    object-fit:cover;
+    flex-shrink:0;
+}
+.online-dot{width:8px;height:8px;border-radius:50%;background:#00cc44;}
+
+.chat-panel{
+    background:#180c0c;
+    display:flex;
+    flex-direction:column;
+    border-right:1px solid #8b5a00;
+    height:100%;
+}
+.chat-top{
+    padding:12px 16px;
+    border-bottom:1px solid #8b5a00;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    flex:0 0 auto;
+}
+.chat-name{font-size:18px;font-weight:bold;color:#ffd700;}
+.online-count{font-size:12px;color:#00cc44;margin-left:10px;}
+.chat-group-avatar{
+    width:36px;
+    height:36px;
+    border-radius:4px;
+    background:#991111;
+    color:#ffd700;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-weight:bold;
+    object-fit:cover;
+    cursor:pointer;
+}
+.chat-content{
+    flex:1;
+    overflow-y:auto;
+    padding:16px;
+    min-height:300px;
+}
+.msg-item{
+    margin:12px 0;
+    display:flex;
+    gap:10px;
+}
+.msg-self{flex-direction:row-reverse;}
+.msg-avatar{
+    width:40px;
+    height:40px;
+    border-radius:4px;
+    background:#991111;
+    color:#ffd700;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-weight:bold;
+    object-fit:cover;
+    flex-shrink:0;
+    cursor:pointer;
+    font-size:18px;
+}
+.msg-body{
+    max-width:60%;
+    display:flex;
+    flex-direction:column;
+}
+.msg-self .msg-body{align-items:flex-end;}
+.msg-name{
+    font-size:12px;
+    color:#ffd700;
+    margin-bottom:4px;
+    padding:0 4px;
+}
+.msg-box{
+    padding:8px 12px;
+    border-radius:6px;
+    background:#2b1616;
+    border:1px solid #8b5a00;
+    word-break:break-word;
+    white-space:pre-wrap;
+}
+.msg-self .msg-box{background:#601010;border-color:#ffd700;}
+.msg-image{
+    max-width:240px;
+    max-height:300px;
+    border-radius:6px;
+    border:1px solid #8b5a00;
+    display:block;
+    cursor:zoom-in;
+}
+.msg-video{
+    max-width:280px;
+    max-height:320px;
+    border-radius:6px;
+    border:1px solid #8b5a00;
+    display:block;
+    background:#000;
+}
+.msg-system{
+    text-align:center;
+    color:#dd9966;
+    font-size:13px;
+    margin:10px 0;
+}
+
+.chat-input-area{
+    flex:0 0 auto;
+    border-top:1px solid #8b5a00;
+    padding:10px;
+}
+.tool-bar{
+    display:flex;
+    gap:10px;
+    margin-bottom:8px;
+    flex-wrap:wrap;
+}
+.tool-btn{
+    padding:6px 10px;
+    background:#220b0b;
+    border:1px solid #b8860b;
+    color:#ffd700;
+    border-radius:4px;
+    cursor:pointer;
+    font-size:14px;
+}
+.tool-btn:hover{background:#991111;}
+#msgText{
+    width:100%;
+    min-height:44px;
+    max-height:30vh;
+    padding:8px;
+    border:1px solid #b8860b;
+    resize:none;
+    outline:none;
+    background:#180c0c;
+    color:#f7e9d2;
+    border-radius:6px;
+    overflow-y:auto;
+}
+#msgText.drag-over{
+    border:2px solid #ffd700;
+    background:#2c1515;
+}
+.send-row{display:flex;justify-content:flex-end;margin-top:8px;}
+#sendBtn{
+    padding:6px 16px;
+    border:none;
+    background:#991111;
+    color:#ffd700;
+    border-radius:4px;
+    cursor:pointer;
+}
+
+.right-panel{
+    background:#220b0b;
+    padding:16px;
+    overflow-y:auto;
+}
+.user-info{text-align:center;}
+.user-info .avatar{
+    width:80px;
+    height:80px;
+    font-size:32px;
+    margin:0 auto 10px;
+    cursor:pointer;
+    object-fit:cover;
+    border-radius:4px;
+    background:#991111;
+    color:#ffd700;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+}
+.user-bio{
+    margin-top:8px;
+    color:#c9a860;
+    font-size:13px;
+    min-height:18px;
+    word-break:break-all;
+}
+.profile-edit{
+    margin-top:16px;
+    text-align:left;
+}
+.profile-edit .form-item{margin-bottom:10px;}
+.profile-edit label{font-size:13px;color:#ffd700;}
+.profile-edit input{
+    width:100%;
+    padding:8px 10px;
+    background:#180c0c;
+    border:1px solid #b8860b;
+    color:#f7e9d2;
+    border-radius:4px;
+    outline:none;
+    margin-top:4px;
+}
+.profile-edit input:focus{border-color:#ff2222;}
+.profile-edit .save-btn{
+    width:100%;
+    padding:9px;
+    margin-top:4px;
+    background:#991111;
+    border:1px solid #ffd700;
+    color:#ffd700;
+    border-radius:4px;
+    cursor:pointer;
+}
+.profile-edit .save-btn:hover{background:#bb2222;}
+.profile-edit .save-btn:disabled{opacity:0.6;cursor:not-allowed;}
+.add-friend-btn{
+    margin-top:12px;
+    padding:8px 14px;
+    background:#991111;
+    color:#ffd700;
+    border:1px solid #ffd700;
+    border-radius:4px;
+    cursor:pointer;
+    width:100%;
+}
+.add-friend-btn:hover{background:#bb2222;}
+
+.emoji-panel{
+    position:absolute;
+    bottom:120px;
+    right:20px;
+    width:340px;
+    max-height:300px;
+    background:#220b0b;
+    border:1px solid #b8860b;
+    border-radius:8px;
+    padding:10px;
+    overflow-y:auto;
+    z-index:50;
+    display:none;
+}
+.emoji-panel.show{display:block;}
+.emoji-tabs{display:flex;border-bottom:1px solid #8b5a00;margin-bottom:8px;}
+.emoji-tab{flex:1;text-align:center;padding:6px;cursor:pointer;color:#c9a860;font-size:13px;}
+.emoji-tab.active{color:#ffd700;border-bottom:2px solid #ff2222;}
+.emoji-title{
+    color:#ffd700;
+    font-size:14px;
+    margin-bottom:8px;
+}
+.emoji-grid{
+    display:grid;
+    grid-template-columns:repeat(6,1fr);
+    gap:8px;
+}
+.emoji-item{
+    font-size:24px;
+    text-align:center;
+    cursor:pointer;
+    padding:6px;
+    background:#180c0c;
+    border-radius:4px;
+}
+.emoji-item:hover{background:#991111;}
+.media-grid{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:8px;
+}
+.media-item{
+    width:100%;
+    aspect-ratio:1/1;
+    object-fit:cover;
+    border-radius:4px;
+    cursor:pointer;
+    border:1px solid #8b5a00;
+    background:#180c0c;
+}
+.media-item.video-item{
+    aspect-ratio:auto;
+    height:80px;
+}
+.emoji-upload-btn{
+    width:100%;
+    padding:8px;
+    margin-top:10px;
+    background:#331414;
+    border:1px dashed #b8860b;
+    color:#ffd700;
+    border-radius:4px;
+    cursor:pointer;
+    font-size:13px;
+}
+.emoji-upload-btn:hover{background:#991111;}
+.emoji-del{
+    position:absolute;
+    font-size:12px;
+}
+.emoji-item-wrap{position:relative;}
+.emoji-item-wrap .del{
+    position:absolute;
+    top:-4px;
+    right:-4px;
+    width:16px;
+    height:16px;
+    background:#991111;
+    color:#fff;
+    border-radius:50%;
+    font-size:10px;
+    line-height:16px;
+    text-align:center;
+    cursor:pointer;
+    border:1px solid #ffd700;
+    z-index:2;
+}
+.emoji-msg-content{position:relative;}
+
+.hidden{display:none !important;}
+
+/* 图片预览大图 */
+.lightbox{
+    position:fixed;
+    inset:0;
+    background:rgba(0,0,0,0.9);
+    z-index:2000;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    cursor:zoom-out;
+}
+.lightbox img{
+    max-width:92%;
+    max-height:92%;
+    border-radius:6px;
+}
+
+/* 加载提示 */
+.loading-tip{
+    text-align:center;
+    color:#c9a860;
+    padding:20px;
+    font-size:14px;
+}
+
+@media (max-width:768px){
+    .wiki-header{padding:10px;}
+    .wiki-title{font-size:18px;}
+    .qq-main{
+        grid-template-columns: 0 1fr 0;
+        height:calc(100vh - 62px);
+    }
+    .left-panel,.right-panel{display:none;}
+    .msg-box{max-width:80%;}
+    .emoji-panel{right:10px;left:10px;width:auto;}
+}
+</style>
+</head>
+<body>
+<div class="wiki-header">
+    <a href="wiki.html" class="back-home">← 返回神修维基</a>
+    <span class="wiki-title">神修社区聊天室</span>
+    <a href="#" id="logoutBtn">退出登录</a>
+</div>
+
+<!-- 登录/注册 -->
+<div class="auth-mask" id="authMask">
+    <div class="auth-box">
+        <h2 class="auth-title">神修维基 · 账号中心</h2>
+        <div class="tab-group">
+            <div class="tab-item active" data-tab="login">登录</div>
+            <div class="tab-item" data-tab="register">注册</div>
+        </div>
+        <div class="form-box active" id="loginBox">
+            <div class="form-item">
+                <label>12位数字ID</label>
+                <input type="text" id="loginId" placeholder="输入你的12位数字ID">
+            </div>
+            <div class="form-item">
+                <label>密码</label>
+                <input type="password" id="loginPwd" placeholder="输入密码">
+            </div>
+            <button class="submit-btn" id="loginBtn">登录</button>
+            <div class="tip-text">登录成功进入神修社区</div>
+        </div>
+        <div class="form-box" id="registerBox">
+            <div class="form-item">
+                <label>12位数字ID（仅数字，不可重复）</label>
+                <input type="text" id="regUid" placeholder="自己设置12位数字ID">
+            </div>
+            <div class="form-item">
+                <label>昵称</label>
+                <input type="text" id="regNick" placeholder="设置你的昵称">
+            </div>
+            <div class="form-item">
+                <label>密码</label>
+                <input type="password" id="regPwd" placeholder="设置登录密码">
+            </div>
+            <div class="form-item">
+                <label>确认密码</label>
+                <input type="password" id="regPwd2" placeholder="再次输入密码">
+            </div>
+            <button class="submit-btn" id="regBtn">注册账号</button>
+            <div class="tip-text">ID只能填写12个数字，ID不可重复，登录使用ID+密码</div>
+        </div>
+    </div>
+</div>
+
+<div class="qq-main" id="mainPage">
+    <!-- 左侧：群聊 / 成员 -->
+    <div class="left-panel">
+        <div class="tab-bar">
+            <div class="tab active" data-type="group">群聊</div>
+            <div class="tab" data-type="friend">成员</div>
+        </div>
+        <div class="search-bar" id="searchFriendBox" style="display:none;">
+            <input type="text" id="searchIdInput" placeholder="输入对方12位ID查找成员">
+        </div>
+        <div id="listWrap"></div>
+    </div>
+
+    <!-- 中间：聊天 -->
+    <div class="chat-panel">
+        <div class="chat-top">
+            <span class="chat-name" id="chatName">神修维基总群</span>
+            <span class="online-count" id="onlineCount">在线 0 人</span>
+        </div>
+
+        <div class="chat-content" id="chatBox"></div>
+
+        <div class="chat-input-area">
+            <div class="tool-bar">
+                <button class="tool-btn" id="imgBtn">图片</button>
+                <button class="tool-btn" id="videoBtn">视频</button>
+                <button class="tool-btn" id="emojiBtn">表情</button>
+            </div>
+
+            <textarea id="msgText" placeholder="输入消息...回车发送，Shift+Enter换行；电脑可直接拖拽图片/视频到此框发送"></textarea>
+
+            <div class="send-row">
+                <button id="sendBtn">发送</button>
+            </div>
+        </div>
+
+        <!-- 表情面板 -->
+        <div class="emoji-panel" id="emojiPanel">
+            <div class="emoji-tabs">
+                <div class="emoji-tab active" data-etab="emoji">常用表情</div>
+                <div class="emoji-tab" data-etab="image">图片表情</div>
+                <div class="emoji-tab" data-etab="video">视频表情</div>
+            </div>
+            <div id="emojiTabContent">
+                <div class="emoji-grid" id="emojiGrid"></div>
+            </div>
+            <div id="imageTabContent" class="hidden">
+                <div class="media-grid" id="imageExprGrid"></div>
+                <button class="emoji-upload-btn" id="uploadImageEmojiBtn">＋ 上传图片表情</button>
+            </div>
+            <div id="videoTabContent" class="hidden">
+                <div class="media-grid" id="videoExprGrid"></div>
+                <button class="emoji-upload-btn" id="uploadVideoEmojiBtn">＋ 上传视频表情（30秒内）</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 右侧：个人主页 -->
+    <div class="right-panel">
+        <div class="user-info" id="myProfile">
+            <div class="avatar" id="myAvatar" title="点击更换头像">?</div>
+            <h3 id="myName">未登录</h3>
+            <p id="myId" style="margin-top:8px;color:#dd9966;">ID：--------</p>
+            <p class="user-bio" id="myBio">这个人很懒，什么都没写</p>
+            <input type="file" id="avatarInput" accept="image/*" class="hidden">
+        </div>
+        <div class="profile-edit">
+            <div class="form-item">
+                <label>昵称（点击保存生效）</label>
+                <input type="text" id="editNick" maxlength="20" placeholder="修改昵称">
+            </div>
+            <div class="form-item">
+                <label>备注 / 个性签名</label>
+                <input type="text" id="editBio" maxlength="50" placeholder="写点什么...">
+            </div>
+            <button class="save-btn" id="saveProfileBtn">保存资料</button>
+        </div>
+    </div>
+</div>
+
+<script>
+// ==================== 全局状态 ====================
+let currentUser = null;      // {uid, nick, bio, avatar}
+let ws = null;
+let wsReconnectTimer = null;
+let msgHistory = [];         // 群聊历史
+let onlineUsers = [];        // 在线列表
+let allUsers = [];           // 全部成员
+let emojiList = [];          // 表情库
+
+// ==================== 工具函数 ====================
+const $ = id => document.getElementById(id);
+
+function escapeHtml(str) {
+    return String(str).replace(/[&<>"']/g, c => ({
+        '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'
+    })[c]);
+}
+
+function fmtTime(ts) {
+    const d = new Date(ts);
+    const p = n => String(n).padStart(2, '0');
+    return `${p(d.getHours())}:${p(d.getMinutes())}`;
+}
+
+async function api(path, method, body) {
+    const opts = { method, headers: {} };
+    if (body !== undefined) {
+        opts.headers['Content-Type'] = 'application/json';
+        opts.body = JSON.stringify(body);
+    }
+    const res = await fetch(path, opts);
+    const data = await res.json().catch(() => ({ ok: false, msg: '服务器响应异常' }));
+    return data;
+}
+
+function readFileAsDataURL(file) {
+    return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.onload = () => resolve(reader.result);
+        reader.onerror = reject;
+        reader.readAsDataURL(file);
+    });
+}
+
+function toast(msg) {
+    alert(msg);
+}
+
+// 校验视频时长 <= 30秒（视频表情用）
+function checkVideoDuration(file) {
+    return new Promise((resolve) => {
+        const url = URL.createObjectURL(file);
+        const video = document.createElement('video');
+        video.preload = 'metadata';
+        video.onloadedmetadata = () => {
+            URL.revokeObjectURL(url);
+            resolve(video.duration);
+        };
+        video.onerror = () => { URL.revokeObjectURL(url); resolve(-1); };
+        video.src = url;
+    });
+}
+
+// ==================== 登录 / 注册 ====================
+$('regBtn').onclick = async function() {
+    const uid = $('regUid').value.trim();
+    const nick = $('regNick').value.trim();
+    const pwd = $('regPwd').value.trim();
+    const pwd2 = $('regPwd2').value.trim();
+
+    if (!/^\d{12}$/.test(uid)) { toast('ID必须为12位纯数字！'); return; }
+    if (!nick) { toast('昵称不能为空！'); return; }
+    if (pwd !== pwd2) { toast('两次密码不一致！'); return; }
+    if (pwd.length < 4) { toast('密码长度至少4位！'); return; }
+
+    const btn = $('regBtn');
+    btn.disabled = true;
+    const data = await api('/api/register', 'POST', { uid, nick, password: pwd });
+    btn.disabled = false;
+    if (!data.ok) { toast(data.msg || '注册失败'); return; }
+    toast(`注册成功！你的ID：${uid}`);
+    $('loginId').value = uid;
+    $('loginPwd').value = pwd;
+    switchTab('login');
+};
+
+$('loginBtn').onclick = async function() {
+    const uid = $('loginId').value.trim();
+    const pwd = $('loginPwd').value.trim();
+    if (!uid || !pwd) { toast('请输入ID和密码'); return; }
+
+    const btn = $('loginBtn');
+    btn.disabled = true;
+    const data = await api('/api/login', 'POST', { uid, password: pwd });
+    btn.disabled = false;
+    if (!data.ok) { toast(data.msg || '登录失败'); return; }
+
+    currentUser = data.user;
+    localStorage.setItem('shenxiu_token', JSON.stringify({ uid: currentUser.uid, token: currentUser.token }));
+    enterChat();
+};
+
+function switchTab(name) {
+    document.querySelectorAll('.tab-item').forEach(t => t.classList.toggle('active', t.dataset.tab === name));
+    $('loginBox').classList.toggle('active', name === 'login');
+    $('registerBox').classList.toggle('active', name === 'register');
+}
+document.querySelectorAll('.tab-item').forEach(t => {
+    t.onclick = () => switchTab(t.dataset.tab);
+});
+
+// ==================== 进入聊天 ====================
+function enterChat() {
+    $('authMask').classList.add('hidden');
+    renderMyProfile();
+    loadAllUsers();
+    connectWS();
+    renderEmojiPanel('emoji');
+}
+
+function renderMyProfile() {
+    $('myName').innerText = currentUser.nick;
+    $('myId').innerText = 'ID：' + currentUser.uid;
+    $('myBio').innerText = currentUser.bio || '这个人很懒，什么都没写';
+    const av = $('myAvatar');
+    if (currentUser.avatar) {
+        av.innerHTML = `<img src="${currentUser.avatar}" style="width:80px;height:80px;border-radius:4px;object-fit:cover;">`;
+    } else {
+        av.innerText = currentUser.nick.charAt(0);
+    }
+    $('editNick').value = currentUser.nick;
+    $('editBio').value = currentUser.bio || '';
+}
+
+// 改头像
+$('myAvatar').onclick = () => $('avatarInput').click();
+$('avatarInput').onchange = async function(e) {
+    const file = e.target.files[0];
+    if (!file) return;
+    if (!file.type.startsWith('image/')) { toast('只能上传图片头像'); return; }
+    if (file.size > 2 * 1024 * 1024) { toast('头像不能超过2MB'); return; }
+    const dataUrl = await readFileAsDataURL(file);
+    const data = await api('/api/avatar', 'POST', { uid: currentUser.uid, avatar: dataUrl });
+    if (data.ok) {
+        currentUser.avatar = dataUrl;
+        renderMyProfile();
+        toast('头像已更新');
+    } else {
+        toast(data.msg || '头像更新失败');
+    }
+    $('avatarInput').value = '';
+};
+
+// 保存昵称/备注
+$('saveProfileBtn').onclick = async function() {
+    const nick = $('editNick').value.trim();
+    const bio = $('editBio').value.trim();
+    if (!nick) { toast('昵称不能为空'); return; }
+    const btn = $('saveProfileBtn');
+    btn.disabled = true;
+    const data = await api('/api/profile', 'POST', { uid: currentUser.uid, nick, bio });
+    btn.disabled = false;
+    if (data.ok) {
+        currentUser.nick = data.user.nick;
+        currentUser.bio = data.user.bio || '';
+        // 更新本地token（保留token）
+        const tok = JSON.parse(localStorage.getItem('shenxiu_token') || '{}');
+        tok.nick = data.user.nick;
+        localStorage.setItem('shenxiu_token', JSON.stringify(tok));
+        renderMyProfile();
+        renderLeftList('group');
+        toast('资料已保存');
+    } else {
+        toast(data.msg || '保存失败');
+    }
+};
+
+// ==================== WebSocket ====================
+function wsUrl() {
+    const proto = location.protocol === 'https:' ? 'wss://' : 'ws://';
+    return proto + location.host + '/ws';
+}
+
+function connectWS() {
+    if (ws) { try { ws.close(); } catch(e){} }
+    ws = new WebSocket(wsUrl());
+
+    ws.onopen = () => {
+        ws.send(JSON.stringify({ type: 'auth', uid: currentUser.uid, nick: currentUser.nick }));
+    };
+
+    ws.onmessage = (ev) => {
+        let msg;
+        try { msg = JSON.parse(ev.data); } catch(e){ return; }
+
+        if (msg.type === 'history') {
+            msgHistory = msg.data || [];
+            renderMsg();
+        } else if (msg.type === 'online') {
+            onlineUsers = msg.data || [];
+            renderOnlineCount();
+            renderLeftList('friend');
+        } else if (msg.type === 'chat') {
+            msgHistory.push(msg.data);
+            if (msgHistory.length > 500) msgHistory = msgHistory.slice(-500);
+            appendMsg(msg.data);
+        } else if (msg.type === 'system') {
+            const sysItem = document.createElement('div');
+            sysItem.className = 'msg-system';
+            sysItem.innerText = msg.data.content;
+            $('chatBox').appendChild(sysItem);
+            scrollToBottom();
+        } else if (msg.type === 'error') {
+            toast(msg.data.msg || '发生错误');
+        } else if (msg.type === 'profile-updated') {
+            // 资料更新，刷新成员列表与本地面板
+            const u = allUsers.find(x => x.uid === msg.data.uid);
+            if (u) { u.nick = msg.data.nick; u.avatar = msg.data.avatar; u.bio = msg.data.bio; }
+            if (msg.data.uid === currentUser.uid) {
+                currentUser.nick = msg.data.nick;
+                currentUser.avatar = msg.data.avatar;
+                currentUser.bio = msg.data.bio;
+                renderMyProfile();
+            }
+            renderLeftList('group');
+            renderLeftList('friend');
+        }
+    };
+
+    ws.onclose = () => {
+        clearTimeout(wsReconnectTimer);
+        wsReconnectTimer = setTimeout(connectWS, 3000);
+    };
+
+    ws.onerror = () => { /* 等待 onclose 重连 */ };
+}
+
+function renderOnlineCount() {
+    $('onlineCount').innerText = `在线 ${onlineUsers.length} 人`;
+}
+
+function scrollToBottom() {
+    const box = $('chatBox');
+    requestAnimationFrame(() => { box.scrollTop = box.scrollHeight; });
+}
+
+// ==================== 渲染消息 ====================
+function renderMsg() {
+    const box = $('chatBox');
+    box.innerHTML = '';
+    if (!msgHistory.length) {
+        box.innerHTML = '<div class="msg-system">欢迎来到神修社区，发第一条消息吧！</div>';
+        return;
+    }
+    msgHistory.forEach(m => box.appendChild(buildMsg(m)));
+    scrollToBottom();
+}
+
+function appendMsg(m) {
+    $('chatBox').appendChild(buildMsg(m));
+    scrollToBottom();
+}
+
+function buildMsg(m) {
+    const div = document.createElement('div');
+    div.className = 'msg-item' + (m.senderId === currentUser.uid ? ' msg-self' : '');
+
+    // 头像
+    let avatarHtml = '';
+    if (m.avatar) {
+        avatarHtml = `<img class="msg-avatar" src="${m.avatar}" onclick="viewProfile('${m.senderId}')">`;
+    } else {
+        avatarHtml = `<div class="msg-avatar" onclick="viewProfile('${m.senderId}')">${escapeHtml((m.sender || '?').charAt(0))}</div>`;
+    }
+
+    let bodyHtml = '';
+    if (m.type === 'image') {
+        bodyHtml = `<img class="msg-image" src="${m.content}" onclick="openLightbox('${m.content}')">`;
+    } else if (m.type === 'video') {
+        bodyHtml = `<video class="msg-video" src="${m.content}" controls preload="metadata"></video>`;
+    } else {
+        bodyHtml = `<div class="msg-box">${escapeHtml(m.content)}</div>`;
+    }
+
+    div.innerHTML = `
+        ${avatarHtml}
+        <div class="msg-body">
+            <div class="msg-name">${escapeHtml(m.sender)} · ${fmtTime(m.time)}</div>
+            ${bodyHtml}
+        </div>
+    `;
+    return div;
+}
+
+function openLightbox(src) {
+    const lb = document.createElement('div');
+    lb.className = 'lightbox';
+    lb.innerHTML = `<img src="${src}">`;
+    lb.onclick = () => lb.remove();
+    document.body.appendChild(lb);
+}
+
+// ==================== 发送消息 ====================
+function sendMessage() {
+    const text = $('msgText').value.trim();
+    if (!text) return;
+    if (!ws || ws.readyState !== 1) { toast('连接已断开，正在重连...'); return; }
+    ws.send(JSON.stringify({ type: 'chat', data: { type: 'text', content: text } }));
+    $('msgText').value = '';
+}
+
+$('sendBtn').onclick = sendMessage;
+$('msgText').onkeydown = function(e) {
+    if (e.key === 'Enter' && !e.shiftKey) {
+        e.preventDefault();
+        sendMessage();
+    }
+};
+
+// ==================== 图片/视频上传发送 ====================
+async function uploadAndSend(file) {
+    const type = file.type;
+    const isImage = type.startsWith('image/');
+    const isVideo = type.startsWith('video/');
+    if (!isImage && !isVideo) { toast('只支持图片或视频文件！'); return; }
+
+    // 视频大小限制
+    if (isVideo && file.size > 20 * 1024 * 1024) { toast('视频不能超过20MB'); return; }
+    if (isImage && file.size > 5 * 1024 * 1024) { toast('图片不能超过5MB'); return; }
+
+    const dataUrl = await readFileAsDataURL(file);
+    const data = await api('/api/upload', 'POST', { data: dataUrl, mime: type });
+    if (!data.ok) { toast(data.msg || '上传失败'); return; }
+
+    if (!ws || ws.readyState !== 1) { toast('连接已断开，正在重连...'); return; }
+    ws.send(JSON.stringify({ type: 'chat', data: { type: isVideo ? 'video' : 'image', content: data.url } }));
+}
+
+const fileInput = document.createElement('input');
+fileInput.type = 'file';
+fileInput.className = 'hidden';
+document.body.appendChild(fileInput);
+
+$('imgBtn').onclick = () => {
+    fileInput.accept = 'image/*';
+    fileInput.click();
+};
+$('videoBtn').onclick = () => {
+    fileInput.accept = 'video/*';
+    fileInput.click();
+};
+fileInput.onchange = async function(e) {
+    const file = e.target.files[0];
+    if (!file) return;
+    await uploadAndSend(file);
+    fileInput.value = '';
+};
+
+// 拖拽上传（图片/视频）
+$('msgText').addEventListener('dragover', function(e) {
+    e.preventDefault();
+    this.classList.add('drag-over');
+});
+$('msgText').addEventListener('dragleave', function() {
+    this.classList.remove('drag-over');
+});
+$('msgText').addEventListener('drop', async function(e) {
+    e.preventDefault();
+    this.classList.remove('drag-over');
+    const file = e.dataTransfer.files && e.dataTransfer.files[0];
+    if (!file) return;
+    await uploadAndSend(file);
+});
+
+// ==================== 表情面板 ====================
+const defaultEmojis = ["😀","😂","🥰","😍","🤔","😎","😭","😡","👍","🙏","❤️","🔥","✨","🎉","😱","🤣","😘","🤗","😴","😷","👀","💪","🙈","😊","🫡","👑","⚔️","🗡️","🏯","🌙","☀️","🐉","🦅","🐺","🌊","⛰️"];
+
+$('emojiBtn').onclick = function(e) {
+    e.stopPropagation();
+    $('emojiPanel').classList.toggle('show');
+};
+
+document.querySelectorAll('.emoji-tab').forEach(t => {
+    t.onclick = () => switchEmojiTab(t.dataset.etab);
+});
+
+function switchEmojiTab(tab) {
+    document.querySelectorAll('.emoji-tab').forEach(t => t.classList.toggle('active', t.dataset.etab === tab));
+    $('emojiTabContent').classList.toggle('hidden', tab !== 'emoji');
+    $('imageTabContent').classList.toggle('hidden', tab !== 'image');
+    $('videoTabContent').classList.toggle('hidden', tab !== 'video');
+    renderEmojiPanel(tab);
+}
+
+function renderEmojiPanel(tab) {
+    if (tab === 'emoji') {
+        $('emojiGrid').innerHTML = '';
+        defaultEmojis.forEach(emoji => {
+            const span = document.createElement('span');
+            span.className = 'emoji-item';
+            span.innerText = emoji;
+            span.onclick = () => { $('msgText').value += emoji; $('msgText').focus(); };
+            $('emojiGrid').appendChild(span);
+        });
+    } else if (tab === 'image') {
+        $('imageExprGrid').innerHTML = '';
+        const imgs = emojiList.filter(e => e.type === 'image');
+        if (!imgs.length) {
+            $('imageExprGrid').innerHTML = '<div class="loading-tip" style="grid-column:1/-1;">还没有图片表情，点击下方按钮上传</div>';
+        }
+        imgs.forEach(e => {
+            const wrap = document.createElement('div');
+            wrap.className = 'emoji-item-wrap';
+            const img = document.createElement('img');
+            img.className = 'media-item';
+            img.src = e.url;
+            img.onclick = () => sendEmojiMsg('image', e.url);
+            wrap.appendChild(img);
+            wrap.appendChild(delBtn(e));
+            $('imageExprGrid').appendChild(wrap);
+        });
+    } else if (tab === 'video') {
+        $('videoExprGrid').innerHTML = '';
+        const vids = emojiList.filter(e => e.type === 'video');
+        if (!vids.length) {
+            $('videoExprGrid').innerHTML = '<div class="loading-tip" style="grid-column:1/-1;">还没有视频表情，上传30秒内视频即可制作</div>';
+        }
+        vids.forEach(e => {
+            const wrap = document.createElement('div');
+            wrap.className = 'emoji-item-wrap';
+            const video = document.createElement('video');
+            video.className = 'media-item video-item';
+            video.src = e.url;
+            video.muted = true;
+            video.loop = true;
+            video.preload = 'metadata';
+            video.onclick = () => sendEmojiMsg('video', e.url);
+            video.onmouseenter = () => video.play().catch(()=>{});
+            video.onmouseleave = () => video.pause();
+            wrap.appendChild(video);
+            wrap.appendChild(delBtn(e));
+            $('videoExprGrid').appendChild(wrap);
+        });
+    }
+}
+
+function delBtn(e) {
+    const d = document.createElement('span');
+    d.className = 'del';
+    d.innerText = '×';
+    d.onclick = async (ev) => {
+        ev.stopPropagation();
+        if (!confirm('删除这个表情？')) return;
+        const data = await api('/api/emoji?id=' + encodeURIComponent(e.id), 'DELETE');
+        if (data.ok) {
+            emojiList = emojiList.filter(x => x.id !== e.id);
+            const active = document.querySelector('.emoji-tab.active');
+            renderEmojiPanel(active ? active.dataset.etab : 'emoji');
+        }
+    };
+    return d;
+}
+
+function sendEmojiMsg(type, url) {
+    if (!ws || ws.readyState !== 1) { toast('连接已断开，正在重连...'); return; }
+    ws.send(JSON.stringify({ type: 'chat', data: { type, content: url } }));
+    $('emojiPanel').classList.remove('show');
+}
+
+// 上传图片表情
+$('uploadImageEmojiBtn').onclick = () => imageEmojiInput.click();
+const imageEmojiInput = document.createElement('input');
+imageEmojiInput.type = 'file';
+imageEmojiInput.accept = 'image/*';
+imageEmojiInput.className = 'hidden';
+document.body.appendChild(imageEmojiInput);
+imageEmojiInput.onchange = async function(e) {
+    const file = e.target.files[0];
+    if (!file) return;
+    if (file.size > 5 * 1024 * 1024) { toast('图片表情不能超过5MB'); return; }
+    const dataUrl = await readFileAsDataURL(file);
+    const data = await api('/api/emoji', 'POST', { data: dataUrl, mime: file.type, uid: currentUser.uid });
+    if (data.ok) {
+        emojiList.push(data.emoji);
+        renderEmojiPanel('image');
+        toast('图片表情已添加');
+    } else {
+        toast(data.msg || '上传失败');
+    }
+    imageEmojiInput.value = '';
+};
+
+// 上传视频表情（30秒内）
+$('uploadVideoEmojiBtn').onclick = () => videoEmojiInput.click();
+const videoEmojiInput = document.createElement('input');
+videoEmojiInput.type = 'file';
+videoEmojiInput.accept = 'video/*';
+videoEmojiInput.className = 'hidden';
+document.body.appendChild(videoEmojiInput);
+videoEmojiInput.onchange = async function(e) {
+    const file = e.target.files[0];
+    if (!file) return;
+    if (!file.type.startsWith('video/')) { toast('请选择视频文件'); return; }
+    if (file.size > 15 * 1024 * 1024) { toast('视频表情不能超过15MB'); return; }
+
+    // 校验时长 <= 30秒
+    const dur = await checkVideoDuration(file);
+    if (dur < 0) { toast('无法读取视频，请换一个文件'); return; }
+    if (dur > 30.5) { toast(`视频过长（${Math.round(dur)}秒），请上传30秒以内的视频`); return; }
+
+    const dataUrl = await readFileAsDataURL(file);
+    const data = await api('/api/emoji', 'POST', { data: dataUrl, mime: file.type, uid: currentUser.uid });
+    if (data.ok) {
+        emojiList.push(data.emoji);
+        renderEmojiPanel('video');
+        toast('视频表情已添加');
+    } else {
+        toast(data.msg || '上传失败');
+    }
+    videoEmojiInput.value = '';
+};
+
+document.onclick = function(e) {
+    const panel = $('emojiPanel');
+    if (!panel.contains(e.target) && e.target !== $('emojiBtn')) {
+        panel.classList.remove('show');
+    }
+};
+
+// ==================== 成员列表 / 左侧栏 ====================
+async function loadAllUsers() {
+    const data = await api('/api/users', 'GET');
+    if (data.ok) {
+        allUsers = data.list;
+        renderLeftList('group');
+        renderLeftList('friend');
+    }
+}
+
+function renderLeftList(type) {
+    const wrap = $('listWrap');
+    wrap.innerHTML = '';
+    if (type === 'group') {
+        const div = document.createElement('div');
+        div.className = 'group-item';
+        div.innerHTML = '<div class="list-avatar">群</div><div>神修维基总群</div>';
+        wrap.appendChild(div);
+    } else {
+        // 显示全部成员（在线优先）
+        const onlineUids = new Set(onlineUsers.map(u => u.uid));
+        const list = [...allUsers].sort((a, b) => {
+            const ao = onlineUids.has(a.uid) ? 1 : 0;
+            const bo = onlineUids.has(b.uid) ? 1 : 0;
+            return bo - ao;
+        });
+        if (!list.length) {
+            wrap.innerHTML = '<div class="loading-tip">暂无成员</div>';
+            return;
+        }
+        list.forEach(u => {
+            const div = document.createElement('div');
+            div.className = 'friend-item';
+            const isOnline = onlineUids.has(u.uid);
+            const dot = isOnline ? '<span class="online-dot"></span>' : '';
+            if (u.avatar) {
+                div.innerHTML = `<img class="list-avatar" src="${u.avatar}"><div>${escapeHtml(u.nick)} ${dot}<br><small>ID:${u.uid}</small></div>`;
+            } else {
+                div.innerHTML = `<div class="list-avatar">${escapeHtml(u.nick.charAt(0))}</div><div>${escapeHtml(u.nick)} ${dot}<br><small>ID:${u.uid}</small></div>`;
+            }
+            div.onclick = () => viewProfile(u.uid);
+            wrap.appendChild(div);
+        });
+    }
+}
+
+// 左侧tab切换
+document.querySelectorAll('.tab').forEach(t => {
+    t.onclick = function() {
+        document.querySelectorAll('.tab').forEach(x => x.classList.remove('active'));
+        this.classList.add('active');
+        const type = this.dataset.type;
+        renderLeftList(type);
+        $('searchFriendBox').style.display = type === 'friend' ? 'block' : 'none';
+    };
+});
+
+// 搜索成员
+$('searchIdInput').onchange = function() {
+    const uid = this.value.trim();
+    if (!/^\d{12}$/.test(uid)) { toast('请输入12位数字ID'); return; }
+    const u = allUsers.find(x => x.uid === uid);
+    if (!u) { toast('没有找到该ID用户'); return; }
+    viewProfile(uid);
+    this.value = '';
+};
+
+// 查看个人主页（弹窗展示对方资料）
+function viewProfile(uid) {
+    const u = allUsers.find(x => x.uid === uid);
+    if (!u) { toast('用户不存在'); return; }
+
+    const mask = document.createElement('div');
+    mask.className = 'auth-mask';
+    mask.style.zIndex = '1500';
+    mask.innerHTML = `
+        <div class="auth-box" style="text-align:center;">
+            <div class="avatar" style="width:80px;height:80px;font-size:32px;margin:0 auto 10px;border-radius:4px;background:#991111;color:#ffd700;display:flex;align-items:center;justify-content:center;object-fit:cover;overflow:hidden;">${u.avatar ? `<img src="${u.avatar}" style="width:80px;height:80px;object-fit:cover;">` : escapeHtml(u.nick.charAt(0))}</div>
+            <h3>${escapeHtml(u.nick)}</h3>
+            <p style="margin-top:8px;color:#dd9966;">ID：${u.uid}</p>
+            <p style="margin-top:8px;color:#c9a860;font-size:14px;">${escapeHtml(u.bio || '这个人很懒，什么都没写')}</p>
+            <p style="margin-top:6px;font-size:13px;color:${onlineUsers.some(x=>x.uid===u.uid) ? '#00cc44' : '#888'};">${onlineUsers.some(x=>x.uid===u.uid) ? '● 在线' : '○ 离线'}</p>
+            <button class="submit-btn" style="margin-top:18px;" onclick="this.closest('.auth-mask').remove()">关闭</button>
+        </div>
+    `;
+    mask.onclick = function(e) { if (e.target === mask) mask.remove(); };
+    document.body.appendChild(mask);
+}
+
+// ==================== 退出登录 ====================
+$('logoutBtn').onclick = function() {
+    if (!currentUser) return;
+    if (ws) { try { ws.close(); } catch(e){} ws = null; }
+    localStorage.removeItem('shenxiu_token');
+    currentUser = null;
+    $('authMask').classList.remove('hidden');
+    $('chatBox').innerHTML = '';
+    $('myName').innerText = '未登录';
+    $('myId').innerText = 'ID：--------';
+    $('myBio').innerText = '这个人很懒，什么都没写';
+    $('myAvatar').innerText = '?';
+};
+
+// ==================== 初始化 ====================
+async function init() {
+    // 尝试自动登录
+    const tok = JSON.parse(localStorage.getItem('shenxiu_token') || 'null');
+    if (tok && tok.uid && tok.token) {
+        const data = await api('/api/autologin', 'POST', { uid: tok.uid, token: tok.token });
+        if (data.ok) {
+            currentUser = data.user;
+            localStorage.setItem('shenxiu_token', JSON.stringify({ uid: currentUser.uid, token: currentUser.token }));
+            enterChat();
+            return;
+        }
+    }
+    $('authMask').classList.remove('hidden');
+}
+
+init();
+</script>
+</body>
+</html>

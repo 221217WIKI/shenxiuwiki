@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>神修维基 - 历史档案</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:"Microsoft Yahei",sans-serif;}
+body{
+    background: linear-gradient(135deg, #991515 0%, #e6b020 100%);
+    background-attachment:fixed;
+    color:#fff8e0;
+    line-height:1.7;
+}
+.container{max-width:1400px;margin:0 auto;padding:15px;}
+.wiki-header{display:flex;justify-content:space-between;align-items:center;padding:15px 0;border-bottom:1px solid #fff8e044;margin-bottom:20px;flex-wrap:wrap;gap:10px;}
+.wiki-header a{color:#fff8e0;text-decoration:none;padding:4px 10px;border:1px solid #fff8e0;border-radius:6px;}
+.wiki-title{font-size:24px;letter-spacing:4px;font-weight:bold;color:#fff8e0;}
+.nav-bar{display:flex;gap:12px;flex-wrap:wrap;}
+.page-wrap{max-width:900px;margin:0 auto;}
+.page-title{text-align:center;font-size:28px;margin-bottom:24px;}
+.timeline-item{
+    background:rgba(0,0,0,0.35);
+    border:1px solid #fff8e033;
+    border-radius:10px;
+    padding:18px;
+    margin-bottom:16px;
+}
+.timeline-time{font-weight:bold;color:#ffdd88;margin-bottom:6px;}
+.back-btn{display:block;width:fit-content;margin:20px auto;padding:10px 22px;border:1px solid #fff8e0;border-radius:8px;color:#fff8e0;text-decoration:none;background:rgba(0,0,0,0.25);transition:0.3s;}
+.back-btn:hover{box-shadow: 0 0 15px #ffdd8880;transform: translateY(-2px);}
+@media (max-width:768px){
+    .nav-bar{flex-wrap:wrap;justify-content:center;}
+}
+</style>
+</head>
+<body>
+<div class="container">
+    <header class="wiki-header">
+        <span class="wiki-title">神修维基</span>
+        <nav class="nav-bar">
+            <a href="index.html">首页</a>
+            <a href="wiki.html">维基主页</a>
+            <a href="members.html">成员展示</a>
+            <a href="forum.html">论坛</a>
+            <a href="community.html">社区</a>
+            <a href="penshen.html">喷神</a>
+            <a href="history.html">历史档案</a>
+            <a href="allies.html">盟友势力</a>
+        </nav>
+    </header>
+    <div class="page-wrap">
+        <h2 class="page-title">神修历史档案</h2>
+        <div class="timeline-item">
+            <div class="timeline-time">【起源阶段】</div>
+            <p>神修势力创立初期，奠基组织框架，确立核心理念，开启圈子发展之路。</p>
+        </div>
+        <div class="timeline-item">
+            <div class="timeline-time">【扩张阶段】</div>
+            <p>势力逐步壮大，吸纳成员，建立对外关系，参与圈子重大事件。</p>
+        </div>
+        <div class="timeline-item">
+            <div class="timeline-time">【鼎盛阶段】</div>
+            <p>神修影响力达到顶峰，建立完整档案体系，确立神修维基用于永久留存历史。</p>
+        </div>
+        <a href="index.html" class="back-btn">← 返回首页</a>
+    </div>
+    <!-- 删除了外部script引用，不会因为js文件缺失白屏 -->
+</div>
+</body>
+</html>

@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>神修维基 - 花祭</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:"Microsoft Yahei",sans-serif;}
+body{
+    background: linear-gradient(135deg, #991515 0%, #e6b020 100%);
+    background-attachment:fixed;
+    color:#fff8e0;
+    line-height:1.7;
+    overflow-x:hidden;
+}
+.container{max-width:1200px;margin:0 auto;padding:20px;}
+.wiki-header{display:flex;justify-content:space-between;align-items:center;padding:15px 0;border-bottom:1px solid #fff8e044;margin-bottom:20px;flex-wrap:wrap;gap:10px;opacity:0;transform:translateY(20px);transition:opacity 0.8s ease, transform 0.8s ease;}
+.wiki-header.show{opacity:1;transform:translateY(0);}
+.wiki-header a{color:#fff8e0;text-decoration:none;padding:4px 10px;border:1px solid #fff8e0;border-radius:6px;}
+.wiki-title{font-size:24px;letter-spacing:4px;font-weight:bold;color:#fff8e0;}
+.wiki-article{
+    background:rgba(0,0,0,0.35);
+    border:1px solid #fff8e033;
+    border-radius:10px;
+    padding:28px;
+    opacity:0;transform:translateY(20px);transition:opacity 0.8s ease, transform 0.8s ease;
+}
+.wiki-article.show{opacity:1;transform:translateY(0);}
+.wiki-article h2{
+    margin-bottom:14px;
+    padding-bottom:8px;
+    border-bottom:1px solid #fff8e044;
+}
+.back-box{margin-bottom:16px;opacity:0;transform:translateY(20px);transition:opacity 0.8s ease, transform 0.8s ease;}
+.back-box.show{opacity:1;transform:translateY(0);}
+.back-box a{
+    color:#fff8e0;
+    text-decoration:none;
+    padding:6px 12px;
+    border:1px solid #fff8e0;
+    border-radius:6px;
+}
+.org-img-box{
+    text-align:center;
+    margin:16px 0;
+}
+.org-img-box img{
+    max-width:320px;
+    border:2px solid rgba(255,248,224,0.2);
+    border-radius:8px;
+}
+@media (max-width:768px){
+    .wiki-header{justify-content:center;}
+    .org-img-box img{max-width:90%;}
+}
+.intro-animation{
+    position:fixed;
+    inset:0;
+    background: linear-gradient(135deg, #991515 0%, #e6b020 100%);
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    z-index:999;
+}
+.line1{
+    font-size:28px;
+    color:#fff8e0;
+    opacity:0;
+    transform:translateY(15px);
+    transition:all 0.7s ease;
+}
+.line1.active{opacity:1;transform:translateY(0);}
+.line2{
+    font-size:22px;
+    color:#fff8e0;
+    margin-top:12px;
+    opacity:0;
+    transform:translateY(15px);
+    transition:all 0.7s ease;
+}
+.line2.active{opacity:1;transform:translateY(0);}
+.banner{
+    width:140px;
+    height:220px;
+    border:3px solid #fff8e0;
+    background:rgba(0,0,0,0.35);
+    border-radius:8px;
+    margin-top:30px;
+    opacity:0;
+    transform:translateY(60px);
+    transition:all 1s ease;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    overflow:hidden;
+}
+.banner img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+}
+.banner.active{opacity:1;transform:translateY(0);}
+.banner-name{
+    font-size:36px;
+    letter-spacing:6px;
+    color:#fff8e0;
+    margin-top:20px;
+    opacity:0;
+    transform:translateY(15px);
+    transition:all 0.7s ease;
+}
+.banner-name.active{opacity:1;transform:translateY(0);}
+.intro-animation.fadeout{
+    opacity:0;
+    pointer-events:none;
+    transition:opacity 1.2s ease;
+}
+</style>
+</head>
+<body>
+<div class="intro-animation">
+    <div class="line1">神修维基档案</div>
+    <div class="line2">组织词条载入中</div>
+    <div class="banner">
+        <img src="assets/org_huaji.png" alt="花祭旗帜">
+    </div>
+    <div class="banner-name">花祭</div>
+</div>
+
+<div class="container">
+    <div class="back-box">
+        <a href="wiki.html">← 返回维基总目录</a>
+    </div>
+    <header class="wiki-header">
+        <span class="wiki-title">花祭</span>
+        <nav>
+            <a href="index.html">首页</a>
+            <a href="forum.html">论坛</a>
+        </nav>
+    </header>
+    <div class="wiki-article">
+        <h2>组织简介</h2>
+        <div class="org-img-box">
+            <img src="assets/org_huaji.png" alt="花祭旗帜">
+        </div>
+        <p>此处填写花祭组织简介内容。</p>
+        <br>
+        <h2>组织历史</h2>
+        <p>此处填写花祭发展历史、圈内事迹、兴衰历程。</p>
+    </div>
+</div>
+
+<script>
+const line1 = document.querySelector('.line1');
+const line2 = document.querySelector('.line2');
+const banner = document.querySelector('.banner');
+const bannerName = document.querySelector('.banner-name');
+const introBox = document.querySelector('.intro-animation');
+const backBox = document.querySelector('.back-box');
+const header = document.querySelector('.wiki-header');
+const article = document.querySelector('.wiki-article');
+
+setTimeout(()=>{line1.classList.add('active');},300);
+setTimeout(()=>{line2.classList.add('active');},1000);
+setTimeout(()=>{banner.classList.add('active');},1700);
+setTimeout(()=>{bannerName.classList.add('active');},2400);
+
+setTimeout(()=>{
+    introBox.classList.add('fadeout');
+    setTimeout(()=>{
+        backBox.classList.add('show');
+        header.classList.add('show');
+        article.classList.add('show');
+    },600);
+},3600);
+</script>
+</body>
+</html>
