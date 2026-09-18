@@ -438,13 +438,32 @@ wss.on('connection', (ws, req) => {
         avatar: u && u.avatar ? u.avatar : '',
         type: msgType,
         content: content,
-        time: Date.now()
+        time: Date.now(),
+        replyTo: msg.data.replyTo || null
       };
 
       const msgs = getMsgs();
       msgs.push(chatMsg);
       saveMsgs(msgs);
       broadcast({ type: 'chat', data: chatMsg });
+      return;
+    }
+
+    // ===== 撤回/删除自己的消息 =====
+    if (msg.type === 'delete') {
+      if (!client) return;
+      const msgId = String(msg.data && msg.data.id || '');
+      if (!msgId) { ws.send(JSON.stringify({ type: 'error', data: { msg: '缺少消息ID' } })); return; }
+      const msgs = getMsgs();
+      const idx = msgs.findIndex(m => m.id === msgId);
+      if (idx < 0) { ws.send(JSON.stringify({ type: 'error', data: { msg: '消息不存在或已删除' } })); return; }
+      if (msgs[idx].senderId !== client.uid) {
+        ws.send(JSON.stringify({ type: 'error', data: { msg: '只能撤回自己发送的消息' } }));
+        return;
+      }
+      msgs.splice(idx, 1);
+      saveMsgs(msgs);
+      broadcast({ type: 'delete', data: { id: msgId } });
       return;
     }
   });

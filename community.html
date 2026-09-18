@@ -108,8 +108,10 @@ body{
 .qq-main{
     display:grid;
     grid-template-columns:260px 1fr 240px;
+    grid-template-rows:100%;
     height:calc(100vh - 72px);
     width:100%;
+    overflow:hidden;
 }
 .left-panel{
     background:#220b0b;
@@ -467,6 +469,129 @@ body{
 .emoji-msg-content{position:relative;}
 
 .hidden{display:none !important;}
+
+/* 消息操作菜单（长按/右键弹出） */
+.msg-context-menu{
+    position:fixed;
+    background:#2b1616;
+    border:1px solid #b8860b;
+    border-radius:8px;
+    padding:6px 0;
+    z-index:3000;
+    min-width:140px;
+    box-shadow:0 4px 20px rgba(0,0,0,0.6);
+}
+.msg-context-menu .ctx-item{
+    padding:10px 18px;
+    cursor:pointer;
+    color:#f7e9d2;
+    font-size:14px;
+}
+.msg-context-menu .ctx-item:hover{background:#991111;color:#ffd700;}
+.msg-context-menu .ctx-danger{color:#ff6666;}
+
+/* 回复引用气泡 */
+.reply-quote{
+    border-left:3px solid #b8860b;
+    background:rgba(0,0,0,0.25);
+    padding:4px 8px;
+    margin-bottom:4px;
+    border-radius:3px;
+    max-width:100%;
+    overflow:hidden;
+    text-overflow:ellipsis;
+    white-space:nowrap;
+    font-size:12px;
+    color:#c9a860;
+    cursor:pointer;
+}
+.reply-quote .reply-sender{color:#ffd700;font-weight:bold;}
+.msg-self .reply-quote{border-left-color:#ffd700;}
+
+/* 回复输入提示条 */
+.reply-bar{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    background:#2b1616;
+    border:1px solid #8b5a00;
+    border-radius:6px;
+    padding:6px 10px;
+    margin-bottom:6px;
+    font-size:13px;
+}
+.reply-bar .reply-cancel{
+    cursor:pointer;
+    color:#ff6666;
+    padding:0 6px;
+}
+
+/* 合并转发消息卡片 */
+.forward-card{
+    border:1px solid #8b5a00;
+    border-radius:6px;
+    background:rgba(0,0,0,0.2);
+    padding:8px 10px;
+    max-width:100%;
+    font-size:13px;
+}
+.forward-card .forward-title{
+    color:#ffd700;
+    font-weight:bold;
+    margin-bottom:6px;
+    padding-bottom:4px;
+    border-bottom:1px solid #8b5a00;
+}
+.forward-card .forward-item{
+    padding:3px 0;
+    color:#f7e9d2;
+    word-break:break-word;
+}
+.forward-card .forward-item .fwd-sender{color:#ffd700;}
+.forward-card .forward-item .fwd-time{color:#888;font-size:11px;margin-left:6px;}
+
+/* 转发选择面板 */
+.forward-mask{
+    position:fixed;
+    inset:0;
+    background:rgba(0,0,0,0.75);
+    z-index:2500;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+}
+.forward-box{
+    background:#220b0b;
+    border:2px solid #b8860b;
+    border-radius:10px;
+    padding:20px;
+    width:90%;
+    max-width:420px;
+    max-height:80vh;
+    overflow-y:auto;
+}
+.forward-box h3{color:#ffd700;text-align:center;margin-bottom:14px;}
+.forward-msg-preview{
+    background:rgba(0,0,0,0.3);
+    border-radius:6px;
+    padding:10px;
+    margin-bottom:12px;
+    font-size:13px;
+    color:#f7e9d2;
+    max-height:200px;
+    overflow-y:auto;
+    word-break:break-word;
+}
+.forward-options{display:flex;flex-direction:column;gap:10px;}
+.forward-options button{
+    padding:11px;
+    background:#991111;
+    border:1px solid #ffd700;
+    color:#ffd700;
+    border-radius:6px;
+    cursor:pointer;
+    font-size:15px;
+}
 
 /* 图片预览大图 */
 .lightbox{
@@ -851,6 +976,11 @@ function connectWS() {
             sysItem.innerText = msg.data.content;
             $('chatBox').appendChild(sysItem);
             scrollToBottom();
+        } else if (msg.type === 'delete') {
+            // 撤回消息：从本地历史和界面移除
+            msgHistory = msgHistory.filter(x => x.id !== msg.data.id);
+            const el = document.querySelector(`[data-msg-id="${msg.data.id}"]`);
+            if (el) el.remove();
         } else if (msg.type === 'error') {
             toast(msg.data.msg || '发生错误');
         } else if (msg.type === 'profile-updated') {
@@ -905,6 +1035,7 @@ function appendMsg(m) {
 function buildMsg(m) {
     const div = document.createElement('div');
     div.className = 'msg-item' + (m.senderId === currentUser.uid ? ' msg-self' : '');
+    div.dataset.msgId = m.id;
 
     // 头像
     let avatarHtml = '';
@@ -914,11 +1045,36 @@ function buildMsg(m) {
         avatarHtml = `<div class="msg-avatar" onclick="viewProfile('${m.senderId}')">${escapeHtml((m.sender || '?').charAt(0))}</div>`;
     }
 
+    // 回复引用气泡
+    let replyHtml = '';
+    if (m.replyTo) {
+        const rt = m.replyTo;
+        let rtPreview = '';
+        if (rt.type === 'image') rtPreview = '[图片]';
+        else if (rt.type === 'video') rtPreview = '[视频]';
+        else rtPreview = rt.content || '';
+        if (rtPreview.length > 60) rtPreview = rtPreview.slice(0, 60) + '...';
+        replyHtml = `<div class="reply-quote" onclick="jumpToMsg('${escapeHtml(m.id)}')"><span class="reply-sender">${escapeHtml(rt.sender || '?')}：</span>${escapeHtml(rtPreview)}</div>`;
+    }
+
     let bodyHtml = '';
     if (m.type === 'image') {
         bodyHtml = `<img class="msg-image" src="${m.content}" onclick="openLightbox('${m.content}')">`;
     } else if (m.type === 'video') {
         bodyHtml = `<video class="msg-video" src="${m.content}" controls preload="metadata"></video>`;
+    } else if (m.type === 'forward') {
+        // 合并转发消息卡片
+        try {
+            const list = JSON.parse(m.content);
+            let items = list.map(it => {
+                let preview = it.type === 'image' ? '[图片]' : it.type === 'video' ? '[视频]' : (it.content || '');
+                if (preview.length > 50) preview = preview.slice(0, 50) + '...';
+                return `<div class="forward-item"><span class="fwd-sender">${escapeHtml(it.sender || '?')}</span><span class="fwd-time">${fmtTime(it.time || Date.now())}</span>：${escapeHtml(preview)}</div>`;
+            }).join('');
+            bodyHtml = `<div class="forward-card"><div class="forward-title">聊天记录（${list.length}条）</div>${items}</div>`;
+        } catch(e) {
+            bodyHtml = `<div class="msg-box">[聊天记录]</div>`;
+        }
     } else {
         bodyHtml = `<div class="msg-box">${escapeHtml(m.content)}</div>`;
     }
@@ -927,10 +1083,119 @@ function buildMsg(m) {
         ${avatarHtml}
         <div class="msg-body">
             <div class="msg-name">${escapeHtml(m.sender)} · ${fmtTime(m.time)}</div>
+            ${replyHtml}
             ${bodyHtml}
         </div>
     `;
+
+    // 长按 / 右键 弹出操作菜单
+    bindMsgContext(div, m);
     return div;
+}
+
+// 跳转到被回复的消息
+function jumpToMsg(msgId) {
+    const target = document.querySelector(`[data-msg-id="${msgId}"]`);
+    if (target) {
+        target.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        target.style.outline = '2px solid #ffd700';
+        setTimeout(() => { target.style.outline = ''; }, 1500);
+    }
+}
+
+// 长按/右键消息弹出操作菜单
+let pendingReply = null;   // 当前正在回复的消息
+
+function bindMsgContext(div, m) {
+    let pressTimer = null;
+    const showMenu = (x, y) => {
+        openMsgMenu(x, y, m);
+    };
+    // 移动端长按
+    div.addEventListener('touchstart', (e) => {
+        pressTimer = setTimeout(() => {
+            const t = e.touches[0];
+            showMenu(t.clientX, t.clientY);
+        }, 500);
+    }, { passive: true });
+    div.addEventListener('touchend', () => clearTimeout(pressTimer));
+    div.addEventListener('touchmove', () => clearTimeout(pressTimer));
+    // PC 右键
+    div.addEventListener('contextmenu', (e) => {
+        e.preventDefault();
+        showMenu(e.clientX, e.clientY);
+    });
+}
+
+function openMsgMenu(x, y, m) {
+    closeMsgMenu();
+    const menu = document.createElement('div');
+    menu.className = 'msg-context-menu';
+    menu.id = 'msgCtxMenu';
+
+    const canDelete = (m.senderId === currentUser.uid) && m.senderId !== 'system';
+
+    let html = `<div class="ctx-item" data-act="reply">回复</div>`;
+    html += `<div class="ctx-item" data-act="forward">转发</div>`;
+    if (canDelete) {
+        html += `<div class="ctx-item ctx-danger" data-act="delete">撤回</div>`;
+    }
+    menu.innerHTML = html;
+    document.body.appendChild(menu);
+
+    // 定位
+    const mw = menu.offsetWidth, mh = menu.offsetHeight;
+    let left = x, top = y;
+    if (left + mw > window.innerWidth - 10) left = window.innerWidth - mw - 10;
+    if (top + mh > window.innerHeight - 10) top = window.innerHeight - mh - 10;
+    menu.style.left = left + 'px';
+    menu.style.top = top + 'px';
+
+    menu.querySelectorAll('.ctx-item').forEach(item => {
+        item.onclick = () => {
+            const act = item.dataset.act;
+            closeMsgMenu();
+            if (act === 'reply') startReply(m);
+            else if (act === 'delete') doDelete(m);
+            else if (act === 'forward') openForwardDialog(m);
+        };
+    });
+    // 点别处关闭
+    setTimeout(() => {
+        const closeOnDoc = (e) => {
+            if (!menu.contains(e.target)) { closeMsgMenu(); document.removeEventListener('click', closeOnDoc); }
+        };
+        document.addEventListener('click', closeOnDoc);
+    }, 0);
+}
+
+function closeMsgMenu() {
+    const old = document.getElementById('msgCtxMenu');
+    if (old) old.remove();
+}
+
+// 回复
+function startReply(m) {
+    pendingReply = {
+        id: m.id,
+        sender: m.sender,
+        type: m.type,
+        content: m.type === 'image' ? '[图片]' : m.type === 'video' ? '[视频]' : m.content
+    };
+    let bar = $('replyBar');
+    if (!bar) {
+        bar = document.createElement('div');
+        bar.id = 'replyBar';
+        bar.className = 'reply-bar';
+        $('.chat-input-area').insertBefore(bar, $('.chat-input-area').firstChild);
+    }
+    bar.innerHTML = `<div>回复 <b style="color:#ffd700;">${escapeHtml(m.sender)}</b>：${escapeHtml(pendingReply.content.length > 30 ? pendingReply.content.slice(0,30)+'...' : pendingReply.content)}</div><div class="reply-cancel" onclick="cancelReply()">✕</div>`;
+    $('msgText').focus();
+}
+function cancelReply() {
+    pendingReply = null;
+    const bar = $('replyBar');
+    if (bar) bar.remove();
 }
 
 function openLightbox(src) {
@@ -946,8 +1211,70 @@ function sendMessage() {
     const text = $('msgText').value.trim();
     if (!text) return;
     if (!ws || ws.readyState !== 1) { toast('连接已断开，正在重连...'); return; }
-    ws.send(JSON.stringify({ type: 'chat', data: { type: 'text', content: text } }));
+    const payload = { type: 'chat', data: { type: 'text', content: text } };
+    if (pendingReply) {
+        payload.data.replyTo = pendingReply;
+        cancelReply();
+    }
+    ws.send(JSON.stringify(payload));
     $('msgText').value = '';
+}
+
+// 撤回消息
+function doDelete(m) {
+    if (!confirm('确定撤回这条消息吗？所有人都会看到它被删除。')) return;
+    if (!ws || ws.readyState !== 1) { toast('连接已断开'); return; }
+    ws.send(JSON.stringify({ type: 'delete', data: { id: m.id } }));
+}
+
+// 转发对话框
+function openForwardDialog(m) {
+    // 支持单条或多条（合并转发）
+    const msgsToForward = Array.isArray(m) ? m : [m];
+    const mask = document.createElement('div');
+    mask.className = 'forward-mask';
+    mask.innerHTML = `
+        <div class="forward-box">
+            <h3>转发消息</h3>
+            <div class="forward-msg-preview">
+                ${msgsToForward.map(it => {
+                    let prev = it.type === 'image' ? '[图片]' : it.type === 'video' ? '[视频]' : (it.content || '');
+                    return `<div><b style="color:#ffd700;">${escapeHtml(it.sender||'?')}</b>：${escapeHtml(prev.length>40?prev.slice(0,40)+'...':prev)}</div>`;
+                }).join('')}
+            </div>
+            <div class="forward-options">
+                <button id="fwdSingle">逐条转发（每条单独发出）</button>
+                <button id="fwdMerge">合并转发为聊天记录</button>
+                <button id="fwdCancel">取消</button>
+            </div>
+        </div>
+    `;
+    document.body.appendChild(mask);
+
+    mask.querySelector('#fwdCancel').onclick = () => mask.remove();
+    mask.querySelector('#fwdSingle').onclick = () => {
+        // 逐条转发：直接把每条内容作为新消息发出
+        msgsToForward.forEach((it, idx) => {
+            const type = it.type === 'image' ? 'image' : it.type === 'video' ? 'video' : 'text';
+            const content = it.content;
+            if (type === 'text') {
+                setTimeout(() => ws.send(JSON.stringify({ type:'chat', data:{ type:'text', content: '【转发】' + (it.sender||'?') + '：' + content } })), idx * 200);
+            } else {
+                setTimeout(() => ws.send(JSON.stringify({ type:'chat', data:{ type, content } })), idx * 200);
+            }
+        });
+        mask.remove();
+        toast('已逐条转发');
+    };
+    mask.querySelector('#fwdMerge').onclick = () => {
+        // 合并转发：打包成一条 forward 类型消息
+        const payload = msgsToForward.map(it => ({
+            sender: it.sender, type: it.type, content: it.content, time: it.time
+        }));
+        ws.send(JSON.stringify({ type:'chat', data:{ type:'forward', content: JSON.stringify(payload) } }));
+        mask.remove();
+        toast('已合并转发为聊天记录');
+    };
 }
 
 $('sendBtn').onclick = sendMessage;
