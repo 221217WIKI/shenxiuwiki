@@ -18,15 +18,19 @@ body{display:flex;flex-direction:column;}
 .login-tabs{display:flex;gap:10px;margin-bottom:15px;}
 .login-tabs button{flex:1;padding:8px;background:transparent;border:1px solid var(--border);color:var(--dim);}
 .login-tabs button.active{background:var(--red);color:var(--gold2);border-color:var(--gold);}
-.topbar{display:flex;align-items:center;justify-content:space-between;padding:10px 15px;background:linear-gradient(90deg,var(--red),#5a0a0a);border-bottom:1px solid var(--gold);flex-shrink:0;}
+.topbar{display:flex;align-items:center;justify-content:space-between;padding:10px 15px;background:linear-gradient(90deg,var(--red),#5a0a0a);border-bottom:1px solid var(--gold);flex-shrink:0;gap:8px;}
+.topbar .left{display:flex;align-items:center;gap:10px;}
 .topbar .title{font-size:17px;font-weight:bold;color:var(--gold2);letter-spacing:2px;}
+.topbar a{color:var(--gold2);text-decoration:none;padding:5px 10px;border:1px solid var(--gold);border-radius:5px;font-size:13px;}
 .topbar button{background:transparent;border:1px solid var(--gold);color:var(--gold2);padding:5px 12px;border-radius:5px;cursor:pointer;font-size:13px;}
 .main{flex:1;display:flex;overflow:hidden;position:relative;}
 .view{display:none;flex:1;flex-direction:column;overflow:hidden;}
 .view.active{display:flex;}
-.chat-header{display:flex;align-items:center;justify-content:space-between;padding:10px 15px;background:var(--panel);border-bottom:1px solid var(--border);flex-shrink:0;}
-.chat-header .group-name{font-size:16px;font-weight:bold;color:var(--gold2);}
-.chat-header .online-count{font-size:13px;color:#6f6;}
+.chat-header{display:flex;align-items:center;justify-content:space-between;padding:8px 12px;background:var(--panel);border-bottom:1px solid var(--border);flex-shrink:0;gap:6px;}
+.chat-header .group-name{font-size:15px;font-weight:bold;color:var(--gold2);}
+.chat-header .online-count{font-size:12px;color:#6f6;}
+.chat-header .hdr-btns{display:flex;gap:5px;}
+.chat-header .hdr-btns button{background:transparent;border:1px solid var(--border);color:var(--gold2);padding:4px 8px;border-radius:4px;cursor:pointer;font-size:12px;}
 .chat-box{flex:1;overflow-y:auto;padding:12px;display:flex;flex-direction:column;gap:8px;}
 .msg-item{display:flex;gap:8px;align-items:flex-start;max-width:100%;}
 .msg-self{flex-direction:row-reverse;}
@@ -69,6 +73,7 @@ body{display:flex;flex-direction:column;}
 .post-avatar{width:36px;height:36px;border-radius:6px;object-fit:cover;background:var(--red);display:flex;align-items:center;justify-content:center;color:var(--gold2);font-weight:bold;}
 .post-author{font-weight:bold;color:var(--gold2);font-size:14px;}
 .post-time{font-size:11px;color:var(--dim);}
+.post-vis{font-size:10px;color:var(--dim);margin-left:5px;}
 .post-content{margin:8px 0;word-break:break-word;white-space:pre-wrap;}
 .post-img{max-width:100%;border-radius:8px;display:block;margin:6px 0;}
 .post-video{max-width:100%;border-radius:8px;display:block;margin:6px 0;}
@@ -84,30 +89,50 @@ body{display:flex;flex-direction:column;}
 .comment-input button{background:var(--red);border:1px solid var(--gold);color:var(--gold2);border-radius:5px;padding:5px 10px;cursor:pointer;}
 .post-composer{background:var(--panel);border:1px solid var(--border);border-radius:10px;padding:10px;margin-bottom:12px;}
 .post-composer textarea{width:100%;background:#000;border:1px solid var(--border);color:var(--text);border-radius:6px;padding:8px;min-height:60px;resize:none;font-size:14px;}
-.post-composer .row{display:flex;gap:6px;margin-top:6px;align-items:center;}
+.post-composer .row{display:flex;gap:6px;margin-top:6px;align-items:center;flex-wrap:wrap;}
 .post-composer button{background:transparent;border:1px solid var(--border);color:var(--gold2);padding:5px 10px;border-radius:5px;cursor:pointer;font-size:13px;}
 .post-composer .pub{margin-left:auto;background:var(--red);color:var(--gold2);}
+.vis-sel{display:flex;gap:5px;}
+.vis-sel button{font-size:12px;padding:4px 8px;}
+.vis-sel button.active{background:var(--red);color:var(--gold2);border-color:var(--gold);}
 .post-preview{max-width:120px;max-height:120px;border-radius:6px;margin-top:6px;}
 .me-box{flex:1;overflow-y:auto;padding:20px;}
-.me-card{background:var(--panel);border:1px solid var(--gold);border-radius:12px;padding:20px;text-align:center;}
+.me-card{background:var(--panel);border:1px solid var(--gold);border-radius:12px;padding:20px;text-align:center;margin-bottom:15px;}
 .me-avatar{width:90px;height:90px;border-radius:50%;object-fit:cover;background:var(--red);display:flex;align-items:center;justify-content:center;color:var(--gold2);font-size:36px;font-weight:bold;margin:0 auto 10px;cursor:pointer;overflow:hidden;}
 .me-nick{font-size:20px;font-weight:bold;color:var(--gold2);}
 .me-uid{font-size:12px;color:var(--dim);margin:4px 0;}
 .me-bio{font-size:13px;color:var(--text);margin-top:8px;font-style:italic;}
 .me-actions{margin-top:15px;display:flex;flex-direction:column;gap:8px;}
 .me-actions button{background:var(--red);border:1px solid var(--gold);color:var(--gold2);padding:10px;border-radius:6px;cursor:pointer;}
+.friends-list{background:var(--panel);border:1px solid var(--border);border-radius:10px;padding:12px;}
+.friends-list h3{color:var(--gold2);font-size:14px;margin-bottom:8px;}
+.friend-item{display:flex;align-items:center;gap:8px;padding:6px 0;border-bottom:1px dotted var(--border);cursor:pointer;}
+.friend-avatar{width:32px;height:32px;border-radius:5px;object-fit:cover;background:var(--red);display:flex;align-items:center;justify-content:center;color:var(--gold2);font-size:14px;font-weight:bold;}
+.friend-nick{flex:1;font-size:14px;}
+.friend-msg{font-size:12px;color:var(--dim);}
 .bottom-nav{display:none;}
-.profile-mask{position:fixed;inset:0;background:rgba(0,0,0,.7);z-index:300;display:none;align-items:center;justify-content:center;}
-.profile-mask.show{display:flex;}
-.profile-card{background:var(--panel);border:1px solid var(--gold);border-radius:12px;padding:25px;width:85%;max-width:320px;text-align:center;}
-.profile-card .big-avatar{width:80px;height:80px;border-radius:50%;object-fit:cover;background:var(--red);display:flex;align-items:center;justify-content:center;color:var(--gold2);font-size:32px;font-weight:bold;margin:0 auto 10px;overflow:hidden;}
-.profile-card h3{color:var(--gold2);font-size:20px;margin-bottom:5px;}
-.profile-card .uid{color:var(--dim);font-size:13px;margin-bottom:8px;}
-.profile-card .bio{color:var(--text);font-size:14px;margin:10px 0;}
-.profile-card .btns{display:flex;flex-direction:column;gap:8px;margin-top:15px;}
-.profile-card .btns button{padding:10px;border-radius:6px;cursor:pointer;font-size:15px;}
+.modal-mask{position:fixed;inset:0;background:rgba(0,0,0,.75);z-index:300;display:none;align-items:center;justify-content:center;}
+.modal-mask.show{display:flex;}
+.modal-card{background:var(--panel);border:1px solid var(--gold);border-radius:12px;padding:20px;width:90%;max-width:340px;max-height:85vh;overflow-y:auto;}
+.modal-card h3{color:var(--gold2);margin-bottom:12px;text-align:center;}
+.modal-card .big-avatar{width:70px;height:70px;border-radius:50%;object-fit:cover;background:var(--red);display:flex;align-items:center;justify-content:center;color:var(--gold2);font-size:28px;font-weight:bold;margin:0 auto 8px;overflow:hidden;}
+.modal-card .nick{text-align:center;font-size:18px;font-weight:bold;color:var(--gold2);}
+.modal-card .uid{text-align:center;color:var(--dim);font-size:12px;margin:3px 0 8px;}
+.modal-card .bio{text-align:center;font-size:13px;color:var(--text);margin:8px 0;}
+.modal-card .btns{display:flex;flex-direction:column;gap:8px;margin-top:12px;}
+.modal-card .btns button{padding:10px;border-radius:6px;cursor:pointer;font-size:15px;}
 .btn-primary{background:var(--red);border:1px solid var(--gold);color:var(--gold2);}
 .btn-ghost{background:transparent;border:1px solid var(--border);color:var(--text);}
+.member-row{display:flex;align-items:center;gap:8px;padding:8px 0;border-bottom:1px dotted var(--border);}
+.member-row .m-avatar{width:36px;height:36px;border-radius:6px;object-fit:cover;background:var(--red);display:flex;align-items:center;justify-content:center;color:var(--gold2);font-weight:bold;}
+.member-row .m-info{flex:1;}
+.member-row .m-nick{font-size:14px;}
+.member-row .m-role{font-size:11px;color:var(--gold2);}
+.member-row .m-ops{display:flex;gap:4px;flex-wrap:wrap;}
+.member-row .m-ops button{font-size:11px;padding:3px 7px;background:transparent;border:1px solid var(--border);color:var(--gold2);border-radius:4px;cursor:pointer;}
+.group-item{display:flex;align-items:center;justify-content:space-between;padding:10px;border-bottom:1px dotted var(--border);cursor:pointer;}
+.group-item .g-name{font-size:15px;font-weight:bold;color:var(--gold2);}
+.group-item .g-meta{font-size:11px;color:var(--dim);}
 .dm-mask{position:fixed;inset:0;background:rgba(0,0,0,.85);z-index:400;display:none;flex-direction:column;}
 .dm-mask.show{display:flex;}
 .dm-header{display:flex;align-items:center;justify-content:space-between;padding:12px 15px;background:var(--red);border-bottom:1px solid var(--gold);}
@@ -147,14 +172,23 @@ body{display:flex;flex-direction:column;}
   </div>
 </div>
 <div class="topbar">
-  <div class="title">神修维基社区</div>
-  <div><button onclick="logout()">退出登录</button></div>
+  <div class="left">
+    <a href="wiki.html">← 返回维基</a>
+    <div class="title">神修维基社区</div>
+  </div>
+  <button onclick="logout()">退出</button>
 </div>
 <div class="main">
   <div class="view active" id="view-chat">
     <div class="chat-header">
-      <div class="group-name">神修维基无权</div>
-      <div class="online-count">在线 <span id="onlineNum">0</span> 人 · 总注册 <span id="totalNum">0</span> 人</div>
+      <div>
+        <div class="group-name" id="curGroupName">神修维基无权</div>
+        <div class="online-count">在线 <span id="onlineNum">0</span> · 总注册 <span id="totalNum">0</span></div>
+      </div>
+      <div class="hdr-btns">
+        <button onclick="showGroups()">群列表</button>
+        <button onclick="showGroupInfo()">群成员</button>
+      </div>
     </div>
     <div class="chat-box" id="chatBox"></div>
     <div class="chat-input-area">
@@ -179,6 +213,11 @@ body{display:flex;flex-direction:column;}
         <div class="row">
           <button onclick="pickPostImage()">图片</button>
           <button onclick="pickPostVideo()">视频</button>
+          <div class="vis-sel">
+            <button class="active" data-v="public" onclick="setVis(this)">公开</button>
+            <button data-v="friends" onclick="setVis(this)">仅好友</button>
+            <button data-v="private" onclick="setVis(this)">仅自己</button>
+          </div>
           <img id="postPreview" class="post-preview" style="display:none">
           <button class="pub" onclick="publishPost()">发布</button>
         </div>
@@ -197,7 +236,12 @@ body{display:flex;flex-direction:column;}
         <div class="me-actions">
           <button onclick="changeNick()">改昵称</button>
           <button onclick="changeBio()">改签名</button>
+          <button onclick="createGroupDialog()">创建新群</button>
         </div>
+      </div>
+      <div class="friends-list">
+        <h3>我的好友</h3>
+        <div id="friendsList"><div style="color:var(--dim);font-size:13px">暂无好友</div></div>
       </div>
     </div>
   </div>
@@ -212,16 +256,30 @@ body{display:flex;flex-direction:column;}
 <input type="file" id="filePostImage" accept="image/*" style="display:none">
 <input type="file" id="filePostVideo" accept="video/*" style="display:none">
 <input type="file" id="fileAvatar" accept="image/*" style="display:none">
-<div class="profile-mask" id="profileMask" onclick="if(event.target===this)closeProfile()">
-  <div class="profile-card">
+<div class="modal-mask" id="groupListModal">
+  <div class="modal-card">
+    <h3>群列表</h3>
+    <div id="groupListBox"></div>
+    <div class="btns"><button class="btn-ghost" onclick="closeModal('groupListModal')">关闭</button></div>
+  </div>
+</div>
+<div class="modal-mask" id="groupInfoModal">
+  <div class="modal-card">
+    <h3 id="groupInfoTitle">群成员</h3>
+    <div id="groupMembersBox"></div>
+    <div class="btns"><button class="btn-ghost" onclick="closeModal('groupInfoModal')">关闭</button></div>
+  </div>
+</div>
+<div class="modal-mask" id="profileModal">
+  <div class="modal-card" onclick="if(event.target===this)closeModal('profileModal')">
     <div class="big-avatar" id="pAvatar">?</div>
-    <h3 id="pNick">?</h3>
+    <div class="nick" id="pNick">?</div>
     <div class="uid" id="pUid"></div>
     <div class="bio" id="pBio"></div>
     <div class="btns">
       <button class="btn-primary" onclick="addFriend()">加好友</button>
       <button class="btn-primary" onclick="openDM()">发私信</button>
-      <button class="btn-ghost" onclick="closeProfile()">关闭</button>
+      <button class="btn-ghost" onclick="closeModal('profileModal')">关闭</button>
     </div>
   </div>
 </div>
@@ -240,9 +298,11 @@ body{display:flex;flex-direction:column;}
 <script>
 const $=id=>document.getElementById(id);
 let currentUser=null,ws=null,msgHistory=[],allUsers=[],onlineUsers=[],emojis=[];
-let currentProfileUid=null,dmPartner=null,dmHistory=[];
-let pendingPostMedia=null,pendingReply=null;
+let currentGroupId='default',currentProfileUid=null,dmPartner=null,dmHistory=[];
+let pendingPostMedia=null,pendingReply=null,postVis='public';
 let mediaRecorder=null,audioChunks=[],isRecording=false;
+let myGroups=[];
+
 function switchLoginTab(t){
   $('tabLogin').classList.toggle('active',t==='login');
   $('tabReg').classList.toggle('active',t==='reg');
@@ -289,19 +349,33 @@ function connectWS(){
     let msg;try{msg=JSON.parse(e.data);}catch(err){return;}
     if(msg.type==='history'){msgHistory=msg.data||[];renderMsgs();}
     else if(msg.type==='online'){onlineUsers=msg.data||[];$('onlineNum').textContent=onlineUsers.length;refreshTotal();}
-    else if(msg.type==='chat'){msgHistory.push(msg.data);appendMsg(msg.data);scrollChatBottom();}
-    else if(msg.type==='system'){const d=document.createElement('div');d.className='msg-system';d.textContent=msg.data.content;$('chatBox').appendChild(d);scrollChatBottom();}
+    else if(msg.type==='chat'){if(msg.data.gid===currentGroupId){msgHistory.push(msg.data);appendMsg(msg.data);scrollChatBottom();}}
+    else if(msg.type==='system'){if(msg.data.gid===currentGroupId||!msg.data.gid){const d=document.createElement('div');d.className='msg-system';d.textContent=msg.data.content;$('chatBox').appendChild(d);scrollChatBottom();}}
     else if(msg.type==='delete'){msgHistory=msgHistory.filter(x=>x.id!==msg.data.id);const el=document.querySelector(`[data-msg-id="${msg.data.id}"]`);if(el)el.remove();}
     else if(msg.type==='profile-updated'){allUsers=allUsers.map(u=>u.uid===msg.data.uid?{...u,...msg.data}:u);}
     else if(msg.type==='dm'){handleDM(msg.data);}
     else if(msg.type==='post-new'){prependPost(msg.data);}
     else if(msg.type==='post-comment'){loadPosts();}
+    else if(msg.type==='kicked'){toast('你被移出了该群');joinGroup('default');}
     else if(msg.type==='error'){toast(msg.data.msg);}
   };
   ws.onclose=()=>setTimeout(connectWS,2000);
 }
 function refreshTotal(){fetch('/api/users').then(r=>r.json()).then(r=>{if(r.ok)$('totalNum').textContent=r.list.length;});}
-function loadUsers(){fetch('/api/users').then(r=>r.json()).then(r=>{if(r.ok)allUsers=r.list;});}
+function loadUsers(){fetch('/api/users').then(r=>r.json()).then(r=>{if(r.ok){allUsers=r.list;loadMyFriends();}});}
+function loadMyFriends(){
+  if(!currentUser||!currentUser.friends)return;
+  const box=$('friendsList');
+  if(!currentUser.friends.length){box.innerHTML='<div style="color:var(--dim);font-size:13px">暂无好友，点别人头像可以加好友</div>';return;}
+  box.innerHTML=currentUser.friends.map(uid=>{
+    const u=allUsers.find(x=>x.uid===uid)||{uid,nick:'?'};
+    return `<div class="friend-item" onclick="openDMSimple('${uid}','${u.nick||'朋友'}')">
+      <div class="friend-avatar">${u.avatar?`<img src="${u.avatar}" style="width:100%;height:100%;object-fit:cover;border-radius:5px">`:escapeHtml((u.nick||'?').charAt(0))}</div>
+      <div class="friend-nick">${escapeHtml(u.nick||'?')}</div>
+      <div class="friend-msg">私信 →</div>
+    </div>`;
+  }).join('');
+}
 function renderMsgs(){$('chatBox').innerHTML='';msgHistory.forEach(appendMsg);scrollChatBottom();}
 function appendMsg(m){
   const div=document.createElement('div');
@@ -368,19 +442,19 @@ function cancelReply(){pendingReply=null;const b=document.querySelector('.reply-
 function doDelete(m){if(!confirm('撤回这条消息？'))return;ws.send(JSON.stringify({type:'delete',data:{id:m.id}}));}
 function forwardDialog(m){
   const list=Array.isArray(m)?m:[m];
-  const mask=document.createElement('div');mask.className='profile-mask show';
-  mask.innerHTML=`<div class="profile-card"><h3>转发消息</h3>
+  const mask=document.createElement('div');mask.className='modal-mask show';
+  mask.innerHTML=`<div class="modal-card"><h3>转发消息</h3>
     <div style="margin:10px 0;font-size:13px">${list.map(it=>`<div><b style="color:var(--gold2)">${escapeHtml(it.sender||'?')}</b>:${escapeHtml(it.type==='image'?'[图片]':it.type==='video'?'[视频]':it.content||'')}</div>`).join('')}</div>
     <div class="btns"><button class="btn-primary" id="fwdSingle">逐条转发</button><button class="btn-primary" id="fwdMerge">合并为聊天记录</button><button class="btn-ghost" id="fwdCancel">取消</button></div></div>`;
   document.body.appendChild(mask);
   mask.querySelector('#fwdCancel').onclick=()=>mask.remove();
   mask.querySelector('#fwdSingle').onclick=()=>{
-    list.forEach((it,i)=>{setTimeout(()=>ws.send(JSON.stringify({type:'chat',data:{type:it.type==='image'?'image':it.type==='video'?'video':'text',content:it.type==='text'?'【转发】'+(it.sender||'?')+': '+it.content:it.content}})),i*200);});
+    list.forEach((it,i)=>{setTimeout(()=>ws.send(JSON.stringify({type:'chat',data:{gid:currentGroupId,type:it.type==='image'?'image':it.type==='video'?'video':'text',content:it.type==='text'?'【转发】'+(it.sender||'?')+': '+it.content:it.content}})),i*200);});
     mask.remove();toast('已转发');
   };
   mask.querySelector('#fwdMerge').onclick=()=>{
     const payload=list.map(it=>({sender:it.sender,type:it.type,content:it.content,time:it.time}));
-    ws.send(JSON.stringify({type:'chat',data:{type:'forward',content:JSON.stringify(payload)}}));
+    ws.send(JSON.stringify({type:'chat',data:{gid:currentGroupId,type:'forward',content:JSON.stringify(payload)}}));
     mask.remove();toast('已合并转发');
   };
 }
@@ -388,7 +462,7 @@ function sendMessage(){
   const text=$('msgText').value.trim();
   if(!text)return;
   if(!ws||ws.readyState!==1){toast('连接中...');return;}
-  const data={type:'text',content:text};
+  const data={type:'text',content:text,gid:currentGroupId};
   if(pendingReply){data.replyTo=pendingReply;cancelReply();}
   ws.send(JSON.stringify({type:'chat',data}));
   $('msgText').value='';
@@ -404,7 +478,7 @@ async function uploadAndSend(file,type){
   reader.onload=async()=>{
     const r=await fetch('/api/upload',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({data:reader.result,mime:file.type})}).then(r=>r.json());
     if(!r.ok){toast(r.msg);return;}
-    ws.send(JSON.stringify({type:'chat',data:{type,content:r.url}}));
+    ws.send(JSON.stringify({type:'chat',data:{gid:currentGroupId,type,content:r.url}}));
   };
   reader.readAsDataURL(file);
 }
@@ -419,7 +493,7 @@ async function toggleVoice(btn){
         const reader=new FileReader();
         reader.onload=async()=>{
           const r=await fetch('/api/upload',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({data:reader.result,mime:'audio/webm'})}).then(r=>r.json());
-          if(r.ok)ws.send(JSON.stringify({type:'chat',data:{type:'audio',content:r.url}}));
+          if(r.ok)ws.send(JSON.stringify({type:'chat',data:{gid:currentGroupId,type:'audio',content:r.url}}));
         };
         reader.readAsDataURL(blob);
         stream.getTracks().forEach(t=>t.stop());
@@ -438,7 +512,7 @@ function renderEmojis(){
     :`<img src="${e.url}" class="emoji-item" onclick="sendEmoji('${e.url}','image')">`).join('');
 }
 function toggleEmoji(){$('emojiPanel').classList.toggle('show');}
-function sendEmoji(url,type){ws.send(JSON.stringify({type:'chat',data:{type,content:url}}));toggleEmoji();}
+function sendEmoji(url,type){ws.send(JSON.stringify({type:'chat',data:{gid:currentGroupId,type,content:url}}));toggleEmoji();}
 function switchView(v,btn){
   document.querySelectorAll('.view').forEach(x=>x.classList.remove('active'));
   $('view-'+v).classList.add('active');
@@ -453,13 +527,15 @@ function viewProfile(uid){
   $('pUid').textContent='ID: '+u.uid;
   $('pBio').textContent=u.bio||'这个人很懒，什么都没写';
   $('pAvatar').innerHTML=u.avatar?`<img src="${u.avatar}" style="width:100%;height:100%;object-fit:cover">`:escapeHtml(u.nick.charAt(0));
-  $('profileMask').classList.add('show');
+  $('profileModal').classList.add('show');
 }
-function closeProfile(){$('profileMask').classList.remove('show');currentProfileUid=null;}
+function closeModal(id){$(id).classList.remove('show');}
 async function addFriend(){
   if(!currentProfileUid)return;
   const r=await fetch('/api/friend',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({uid:currentUser.uid,friendUid:currentProfileUid})}).then(r=>r.json());
   toast(r.msg||'已添加');
+  if(currentUser.friends)currentUser.friends.push(currentProfileUid);
+  loadMyFriends();
 }
 function openDM(){
   if(!currentProfileUid)return;
@@ -467,7 +543,13 @@ function openDM(){
   dmPartner={uid:currentProfileUid,nick:u.nick||'朋友'};
   $('dmTitle').textContent='与 '+dmPartner.nick+' 的私聊';
   $('dmMask').classList.add('show');
-  loadDmHistory();closeProfile();
+  loadDmHistory();closeModal('profileModal');
+}
+function openDMSimple(uid,nick){
+  dmPartner={uid,nick};
+  $('dmTitle').textContent='与 '+nick+' 的私聊';
+  $('dmMask').classList.add('show');
+  loadDmHistory();
 }
 function closeDM(){$('dmMask').classList.remove('show');dmPartner=null;}
 async function loadDmHistory(){
@@ -511,8 +593,13 @@ function changeBio(){
   const b=prompt('输入签名（50字内）',currentUser.bio||'');if(b===null)return;
   fetch('/api/profile',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({uid:currentUser.uid,bio:b})}).then(r=>r.json()).then(r=>{if(r.ok){currentUser.bio=b;$('meBio').textContent=b||'这个人很懒，什么都没写';toast('签名已改');}});
 }
+function setVis(btn){
+  document.querySelectorAll('.vis-sel button').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  postVis=btn.dataset.v;
+}
 async function loadPosts(){
-  const r=await fetch('/api/posts').then(r=>r.json());
+  const r=await fetch('/api/posts?uid='+currentUser.uid).then(r=>r.json());
   if(r.ok){$('postList').innerHTML='';r.list.forEach(p=>prependPost(p));}
 }
 function prependPost(p){
@@ -523,7 +610,8 @@ function prependPost(p){
   if(p.type==='image')media=`<img class="post-img" src="${p.content}" onclick="openLightbox(this.src)">`;
   else if(p.type==='video')media=`<video class="post-video" src="${p.content}" controls></video>`;
   const liked=(p.likes||[]).includes(currentUser.uid);
-  div.innerHTML=`<div class="post-head">${av}<div><div class="post-author">${escapeHtml(p.authorNick||'?')}</div><div class="post-time">${fmtTime(p.time)}</div></div></div>
+  const visMap={public:'公开',friends:'仅好友',private:'仅自己'};
+  div.innerHTML=`<div class="post-head">${av}<div><div class="post-author">${escapeHtml(p.authorNick||'?')}<span class="post-vis">[${visMap[p.visibility]||'公开'}]</span></div><div class="post-time">${fmtTime(p.time)}</div></div></div>
     <div class="post-content">${escapeHtml(p.content)}</div>${media}
     <div class="post-actions">
       <span class="${liked?'active':''}" onclick="toggleLike('${p.id}')">❤ ${(p.likes||[]).length} 赞</span>
@@ -551,7 +639,7 @@ function sharePost(pid){
   const card=document.getElementById(pid);if(!card)return;
   const author=card.querySelector('.post-author').textContent;
   const content=card.querySelector('.post-content').textContent;
-  ws.send(JSON.stringify({type:'chat',data:{type:'text',content:`【分享动态】${author}: ${content.slice(0,100)}`}}));
+  ws.send(JSON.stringify({type:'chat',data:{gid:currentGroupId,type:'text',content:`【分享动态】${author}: ${content.slice(0,100)}`}}));
   toast('已分享到群聊');
   switchView('chat',document.querySelector('.bottom-nav button[data-view=chat]'));
 }
@@ -573,13 +661,76 @@ async function publishPost(){
     if(!r.ok){toast(r.msg);return;}
     content=r.url;type=pendingPostMedia.type;
   }
-  await fetch('/api/post',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({uid:currentUser.uid,type,content})});
+  await fetch('/api/post',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({uid:currentUser.uid,type,content,visibility:postVis})});
   $('postText').value='';pendingPostMedia=null;$('postPreview').style.display='none';
   toast('动态已发布');
 }
 function openLightbox(src){const lb=$('lightbox');lb.innerHTML=`<img src="${src}">`;lb.classList.add('show');}
 function toast(msg){let t=document.querySelector('.toast');if(t)t.remove();t=document.createElement('div');t.className='toast';t.textContent=msg;document.body.appendChild(t);setTimeout(()=>t.remove(),2000);}
 $('dmText').addEventListener('keydown',e=>{if(e.key==='Enter')sendDM();});
+
+// ===== 群系统 =====
+async function showGroups(){
+  const r=await fetch('/api/groups?uid='+currentUser.uid).then(r=>r.json());
+  if(!r.ok){toast('加载失败');return;}
+  myGroups=r.list;
+  $('groupListBox').innerHTML=r.list.map(g=>`
+    <div class="group-item" onclick="switchGroup('${g.id}')">
+      <div>
+        <div class="g-name">${escapeHtml(g.name)}</div>
+        <div class="g-meta">${g.memberCount}人 · ${g.myRole==='owner'?'群主':g.myRole==='admin'?'管理员':'成员'}</div>
+      </div>
+      <div style="color:var(--gold2)">→</div>
+    </div>`).join('')+`<div class="btns"><button class="btn-primary" onclick="createGroupDialog()">创建新群</button></div>`;
+  $('groupListModal').classList.add('show');
+}
+function createGroupDialog(){
+  const name=prompt('输入新群名称');if(!name)return;
+  fetch('/api/group/create',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({uid:currentUser.uid,name})}).then(r=>r.json()).then(r=>{
+    if(r.ok){toast('群已创建');closeModal('groupListModal');switchGroup(r.group.id);}
+    else toast(r.msg);
+  });
+}
+async function switchGroup(gid){
+  closeModal('groupListModal');
+  currentGroupId=gid;
+  const g=myGroups.find(x=>x.id===gid)||{};
+  $('curGroupName').textContent=g.name||'群聊';
+  ws.send(JSON.stringify({type:'join',data:{gid}}));
+}
+async function showGroupInfo(){
+  const r=await fetch(`/api/group/members/${currentGroupId}`).then(r=>r.json());
+  if(!r.ok){toast('加载失败');return;}
+  $('groupInfoTitle').textContent='群成员 ('+r.members.length+')';
+  const meMember = r.members.find(m=>m.uid===currentUser.uid);
+  const myRole = meMember?meMember.role:'member';
+  $('groupMembersBox').innerHTML=r.members.map(m=>{
+    let ops='';
+    if(m.uid!==currentUser.uid){
+      const canKick = myRole==='owner' || (myRole==='admin' && m.role==='member');
+      const canMute = myRole==='owner' || (myRole==='admin' && m.role!=='admin');
+      const canSetAdmin = myRole==='owner';
+      if(canKick)ops+=`<button onclick="kickMember('${m.uid}')">踢</button>`;
+      if(canSetAdmin)ops+=`<button onclick="setAdmin('${m.uid}',${m.role==='admin'?'false':'true'})">${m.role==='admin'?'取消管理':'设管理'}</button>`;
+      if(canMute)ops+=`<button onclick="muteMember('${m.uid}')">禁言</button>`;
+    }
+    return `<div class="member-row">
+      <div class="m-avatar">${m.avatar?`<img src="${m.avatar}" style="width:100%;height:100%;object-fit:cover">`:escapeHtml(m.nick.charAt(0))}</div>
+      <div class="m-info"><div class="m-nick">${escapeHtml(m.nick)} ${m.muted?`<span style="color:#f55">(禁言${m.muted}s)</span>`:''}</div><div class="m-role">${m.role==='owner'?'群主':m.role==='admin'?'管理员':'成员'}</div></div>
+      <div class="m-ops">${ops}</div>
+    </div>`;
+  }).join('');
+  $('groupInfoModal').classList.add('show');
+}
+function kickMember(uid){if(!confirm('确定踢出该成员？'))return;ws.send(JSON.stringify({type:'kick',data:{gid:currentGroupId,targetUid:uid}}));toast('已踢出');setTimeout(showGroupInfo,500);}
+function setAdmin(uid,add){ws.send(JSON.stringify({type:'setAdmin',data:{gid:currentGroupId,targetUid:uid,add:add}}));toast('操作成功');setTimeout(showGroupInfo,500);}
+function muteMember(uid){
+  const sec=prompt('禁言秒数（0=解除）','60');
+  if(sec===null)return;
+  ws.send(JSON.stringify({type:'mute',data:{gid:currentGroupId,targetUid:uid,seconds:Number(sec)||0}}));
+  toast('操作成功');setTimeout(showGroupInfo,500);
+}
+
 autologin();
 </script>
 </body>
