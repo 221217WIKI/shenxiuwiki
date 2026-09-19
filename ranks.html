@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>神修维基 - 排行总览</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:"Microsoft Yahei",sans-serif;}
+body{
+    background: linear-gradient(135deg, #991515 0%, #e6b020 100%);
+    background-attachment:fixed;
+    color:#fff8e0;
+    line-height:1.7;
+    min-height:100vh;
+}
+.container{max-width:900px;margin:0 auto;padding:15px;}
+.wiki-header{display:flex;justify-content:space-between;align-items:center;padding:15px 0;border-bottom:1px solid #fff8e044;margin-bottom:20px;flex-wrap:wrap;gap:10px;}
+.wiki-header a{color:#fff8e0;text-decoration:none;padding:4px 10px;border:1px solid #fff8e0;border-radius:6px;}
+.wiki-title{font-size:24px;letter-spacing:4px;font-weight:bold;color:#fff8e0;}
+.nav-bar{display:flex;gap:12px;flex-wrap:wrap;}
+.page-title{text-align:center;padding:20px 0 10px;}
+.page-title h1{font-size:32px;letter-spacing:8px;color:#ffd700;text-shadow:0 0 20px rgba(255,215,0,.4);}
+.rank-list{
+    background:rgba(0,0,0,.4);
+    border:1px solid #fff8e033;
+    border-radius:12px;
+    padding:20px;
+}
+.rank-row{
+    display:flex;
+    align-items:center;
+    gap:15px;
+    padding:14px 10px;
+    border-bottom:1px solid #fff8e022;
+}
+.rank-row:last-child{border-bottom:none;}
+.rank-num{
+    width:40px;
+    height:40px;
+    border-radius:50%;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-weight:bold;
+    font-size:18px;
+    flex-shrink:0;
+}
+.rank-1{background:#ffd700;color:#5a0a0a;}
+.rank-2{background:#c0c0c0;color:#5a0a0a;}
+.rank-3{background:#cd7f32;color:#fff;}
+.rank-other{background:rgba(255,255,255,.1);color:#fff8e0;}
+.rank-name{font-size:17px;font-weight:bold;color:#ffd700;}
+.rank-meta{font-size:13px;opacity:.7;margin-top:2px;}
+.empty-tip{opacity:.5;font-size:14px;text-align:center;padding:30px;}
+@media (max-width:768px){
+    .page-title h1{font-size:24px;letter-spacing:4px;}
+    .nav-bar{flex-wrap:wrap;justify-content:center;}
+}
+</style>
+</head>
+<body>
+<div class="container">
+    <header class="wiki-header">
+        <span class="wiki-title">神修维基</span>
+        <nav class="nav-bar">
+            <a href="index.html">首页</a>
+            <a href="wiki.html">维基主页</a>
+            <a href="members.html">成员展示</a>
+            <a href="ranks.html">排行总览</a>
+            <a href="community.html">社区</a>
+            <a href="penshen.html">喷神</a>
+            <a href="history.html">历史档案</a>
+            <a href="allies.html">盟友势力</a>
+        </nav>
+    </header>
+    <div class="page-title">
+        <h1>神修维基排行总览</h1>
+    </div>
+    <div class="rank-list">
+        <div class="empty-tip">暂无收录，待补充</div>
+    </div>
+    <div style="text-align:center;padding:20px;opacity:.6;font-size:13px;">
+        排名由神修圈公认实力评定，仅供参考
+    </div>
+</div>
+</body>
+</html>
